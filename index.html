@@ -166,11 +166,58 @@
     .lecture-desc{width:100%;}
   }
 </style>
+
+<style>
+.article-wrap{max-width:760px;margin:0 auto;padding:64px 6vw 40px;}
+  .article-cat{font-size:13px;font-weight:700;color:var(--ink-faint);margin-bottom:10px;}
+  .article-title{margin:0 0 14px;font-size:clamp(26px,4vw,38px);font-weight:900;line-height:1.4;}
+  .article-meta{font-size:13.5px;color:var(--ink-faint);margin-bottom:20px;}
+  .article-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:32px;}
+  .article-video{position:relative;width:100%;padding-top:56.25%;margin-bottom:32px;background:#000;border-radius:6px;overflow:hidden;}
+  .article-video iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+  .article-body{font-size:16.5px;line-height:1.9;color:var(--ink);}
+  .article-body p{margin:0 0 22px;}
+  .article-body img{max-width:100%;border-radius:6px;}
+  .article-h3{font-size:19px;font-weight:700;margin:36px 0 16px;color:var(--ink);}
+  .scripture-quote{margin:0 0 26px;padding:18px 22px;background:var(--cream-deep);border-left:4px solid var(--brown);border-radius:0 6px 6px 0;font-style:italic;font-size:15.5px;line-height:1.85;color:var(--ink-soft);}
+  .scripture-quote cite{display:block;margin-top:10px;font-style:normal;font-size:13px;font-weight:700;color:var(--ink-faint);}
+  .article-note{margin:0 0 18px;font-weight:700;color:var(--brown);}
+  .attachments{margin-bottom:32px;padding:18px 20px;background:var(--card);border:1px solid var(--line);border-radius:6px;}
+  .attachments-label{font-size:12px;font-weight:700;color:var(--ink-faint);margin-bottom:10px;}
+  .attachment-row{display:inline-flex;align-items:center;gap:9px;font-size:14.5px;color:var(--cream);font-weight:700;padding:12px 22px;background:var(--brown);border-radius:999px;}
+  .attachment-row:hover{opacity:.9;}
+  .article-cta{margin:40px 0;padding:22px 24px;background:var(--cream-deep);border-radius:6px;font-size:14.5px;color:var(--ink-soft);}
+  .article-cta a{font-weight:700;color:var(--brown);}
+  .related-wrap{max-width:760px;margin:0 auto;padding:0 6vw 64px;}
+  .related-wrap h2{font-size:18px;font-weight:700;margin:0 0 16px;}
+  .not-found{padding:120px 6vw;text-align:center;font-size:16px;color:var(--ink-soft);}
+
+</style>
+<style>
+.lec-wrap{max-width:760px;margin:0 auto;padding:64px 6vw 40px;}
+  .lec-wrap h1{margin:0 0 10px;font-size:clamp(26px,4vw,34px);font-weight:900;}
+  .lec-wrap .lec-intro{margin:0 0 32px;font-size:15.5px;color:var(--ink-soft);}
+  .course-tabs{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+  .course-tab{padding:11px 22px;border-radius:999px;border:1.5px solid var(--brown);background:transparent;color:var(--brown);font-size:14.5px;font-weight:700;font-family:inherit;cursor:pointer;}
+  .course-tab.active{background:var(--brown);color:var(--cream);}
+  .course-summary{font-size:14.5px;color:var(--ink-soft);margin-bottom:24px;}
+  .week-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+  .week-card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:8px;}
+  .week-card .week-num{font-size:12px;font-weight:700;color:var(--ink-faint);}
+  .week-card .week-title{font-size:15.5px;font-weight:700;color:var(--ink);line-height:1.45;}
+  .week-card .week-summary{font-size:13px;color:var(--ink-soft);line-height:1.6;}
+  .week-grid > .week-card:last-child:nth-child(3n+1){grid-column:2;}
+  @media (max-width:640px){
+    .week-grid{grid-template-columns:1fr;}
+    .week-grid > .week-card:last-child:nth-child(3n+1){grid-column:1;}
+  }
+
+</style>
 </head>
 <body>
 
 <header>
-  <a class="brand-mark" href="#top">
+  <a class="brand-mark" href="index.html">
     <img src="data:image/png;base64,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" alt="HONG-BRIDGE 로고">
     <span class="brand">HONG-BRIDGE</span>
   </a>
@@ -178,9 +225,9 @@
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
   <nav id="main-nav">
-    <a href="#writing">글</a>
-    <a href="#lectures">성경강의</a>
-    <a href="#sermons">설교</a>
+    <a href="index.html#writing">글</a>
+    <a href="index.html#lectures">성경강의</a>
+    <a href="index.html#sermons">설교</a>
     <a href="#">소개</a>
     <button class="icon-btn" type="button" aria-label="검색">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -196,9 +243,11 @@
         <a href="#">ខ្មែរ</a>
       </div>
     </div>
-    <a class="cta" href="#contact">강의·설교 문의</a>
+    <a class="cta" href="index.html#contact">강의·설교 문의</a>
   </nav>
 </header>
+<div id="view-home">
+
 
 <section id="top" class="hero">
   <p class="lede">신학과 목회를 잇는 이야기</p>
@@ -222,13 +271,13 @@
   </div>
   <div class="lecture-list">
 
-    <a class="lecture-row" href="lectures.html?course=ot">
+    <a class="lecture-row" href="index.html?page=lectures&course=ot">
       <span class="lecture-title">구약성경 10주</span>
       <span class="lecture-desc">구약성경 전체를 하나의 흐름으로 이해하기 위한 10주 강의</span>
       <span class="arrow">→</span>
     </a>
 
-    <a class="lecture-row" href="lectures.html?course=nt">
+    <a class="lecture-row" href="index.html?page=lectures&course=nt">
       <span class="lecture-title">신약성경 10주</span>
       <span class="lecture-desc">복음서에서 서신서까지, 신약을 관통하는 이야기를 따라간다</span>
       <span class="arrow">→</span>
@@ -271,6 +320,53 @@
   </div>
 </section>
 
+
+</div>
+
+<div id="view-article" style="display:none;">
+<main id="article-root">
+  <div class="article-wrap" id="article-loaded" style="display:none;">
+    <div class="article-cat" id="a-cat"></div>
+    <h1 class="article-title" id="a-title"></h1>
+    <div class="article-meta" id="a-date"></div>
+    <div class="article-tags" id="a-tags"></div>
+    <div class="article-video" id="a-video" style="display:none;">
+      <iframe id="a-video-frame" src="" allowfullscreen></iframe>
+    </div>
+    <div class="article-body" id="a-body"></div>
+    <div class="attachments" id="a-attachments" style="display:none;">
+      <div class="attachments-label">첨부파일</div>
+    </div>
+    <div class="article-cta">
+      이 글에 대해 더 이야기하고 싶으신가요?<br>
+      설교·강의·신학적 대화에 관한 문의는 <a href="index.html#contact">여기로 연락</a>해 주세요.
+    </div>
+  </div>
+  <div class="not-found" id="a-notfound" style="display:none;">
+    글을 찾을 수 없습니다. <a href="index.html" style="color:var(--brown);font-weight:700;">홈으로 돌아가기</a>
+  </div>
+</main>
+
+<section class="related-wrap" id="a-related-wrap" style="display:none;">
+  <h2>같은 태그의 글</h2>
+  <div class="tag-list" id="a-related"></div>
+</section>
+
+
+</div>
+
+<div id="view-lectures" style="display:none;">
+<main>
+  <div class="lec-wrap">
+    <h1>성경 강의</h1>
+    <p class="lec-intro">제가 사역했던 대구신광교회에서 구약, 신약 각 10주에 걸쳐 강의했던 내용입니다</p>
+
+    <div class="course-tabs" id="course-tabs"></div>
+    <div class="course-summary" id="course-summary"></div>
+    <div class="week-grid" id="week-list"></div>
+  </div>
+</main>
+</div>
 <footer>
   <div class="foot-row">
     <div>
@@ -304,7 +400,7 @@
 </footer>
 
 <script>
-  var menuToggle = document.getElementById('menu-toggle');
+var menuToggle = document.getElementById('menu-toggle');
   var mainNav = document.getElementById('main-nav');
   menuToggle.addEventListener('click', function () {
     var isOpen = mainNav.classList.toggle('nav-open');
@@ -321,68 +417,330 @@
     langSelect.classList.remove('open');
   });
 
-  fetch('data/writing.json').then(function (r) { return r.json(); }).then(function (items) {
-    var sorted = items.slice().sort(function (a, b) {
-      return (b.date || '').localeCompare(a.date || '');
-    });
-    var top4 = sorted.slice(0, 4);
-    var wrap = document.getElementById('writing-cards');
-    wrap.innerHTML = '';
-    top4.forEach(function (item) {
-      var a = document.createElement('a');
-      a.className = 'card';
-      a.href = 'article.html?id=' + encodeURIComponent(item.id);
-      var cat = [item.mainCategory, item.subCategory].filter(Boolean).join(' · ');
-      var tagsHtml = (item.tags || []).map(function (t) {
-        return '<span class="tag">' + t + '</span>';
-      }).join('');
-      a.innerHTML =
-        '<div class="thumb">' + (item.thumbnail ? '<img src="' + item.thumbnail + '" style="width:100%;height:100%;object-fit:cover;">' : '[대표 이미지]') + '</div>' +
-        '<div class="body">' +
-        '<span class="cat">' + cat + '</span>' +
-        '<h3>' + item.title + '</h3>' +
-        '<p>' + (item.summary || '') + '</p>' +
-        '<div class="tags">' + tagsHtml + '</div>' +
-        '</div>';
-      wrap.appendChild(a);
-    });
+  
+function toYoutubeEmbed(url) {
+    if (!url) return '';
+    var m = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+    return m ? 'https://www.youtube.com/embed/' + m[1] : url;
+  }
 
-    // 설교 카드는 같은 태그를 가진 글과 연결해야 하므로 writing 목록을 함께 사용
-    fetch('data/sermons.json').then(function (r) { return r.json(); }).then(function (sermonItems) {
-      function toYoutubeEmbed(url) {
-        if (!url) return '';
-        var m = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
-        return m ? 'https://www.youtube.com/embed/' + m[1] : url;
+  function renderTags(container, tags) {
+    container.innerHTML = '';
+    (tags || []).forEach(function (t) {
+      var span = document.createElement('span');
+      span.className = 'tag';
+      span.textContent = t;
+      container.appendChild(span);
+    });
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function inlineFormat(s) {
+    return escapeHtml(s)
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:var(--brown);font-weight:700;">$1</a>');
+  }
+
+  function renderBody(container, text) {
+    container.innerHTML = '';
+    (text || '').split(/\n\s*\n/).forEach(function (para) {
+      para = para.trim();
+      if (!para || para === '---') return;
+
+      var imgMatch = para.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+      if (imgMatch) {
+        var fig = document.createElement('figure');
+        fig.style.margin = '0 0 22px';
+        var img = document.createElement('img');
+        img.src = imgMatch[2];
+        img.alt = imgMatch[1];
+        img.style.borderRadius = '6px';
+        fig.appendChild(img);
+        if (imgMatch[1]) {
+          var cap = document.createElement('figcaption');
+          cap.textContent = imgMatch[1];
+          cap.style.cssText = 'font-size:13px;color:var(--ink-faint);margin-top:8px;';
+          fig.appendChild(cap);
+        }
+        container.appendChild(fig);
+        return;
       }
 
-      var withVideo = sermonItems.filter(function (s) { return s.video; });
-      var sortedSermons = withVideo.slice().sort(function (a, b) {
+      if (para.indexOf('### ') === 0) {
+        var h3 = document.createElement('h3');
+        h3.className = 'article-h3';
+        h3.innerHTML = inlineFormat(para.slice(4).trim());
+        container.appendChild(h3);
+        return;
+      }
+
+      if (para.indexOf('note::') === 0) {
+        var note = document.createElement('p');
+        note.className = 'article-note';
+        note.innerHTML = inlineFormat(para.slice(6).trim());
+        container.appendChild(note);
+        return;
+      }
+
+      var lines = para.split('\n').map(function (l) { return l.trim(); });
+      if (lines.length && lines.every(function (l) { return l.indexOf('>') === 0; })) {
+        var stripped = lines.map(function (l) { return l.replace(/^>\s?/, ''); });
+        var citeLine = null;
+        if (stripped.length && stripped[stripped.length - 1].indexOf('—') === 0) {
+          citeLine = stripped.pop();
+        }
+        var bq = document.createElement('blockquote');
+        bq.className = 'scripture-quote';
+        bq.innerHTML = stripped.map(inlineFormat).join('<br>');
+        if (citeLine) {
+          var cite = document.createElement('cite');
+          cite.textContent = citeLine;
+          bq.appendChild(cite);
+        }
+        container.appendChild(bq);
+        return;
+      }
+
+      var p = document.createElement('p');
+      p.innerHTML = lines.map(inlineFormat).join('<br>');
+      container.appendChild(p);
+    });
+  }
+
+  function renderAttachments(container, attachments) {
+    if (!attachments || !attachments.length) return;
+    container.style.display = 'block';
+    attachments.forEach(function (a) {
+      var row = document.createElement('a');
+      row.className = 'attachment-row';
+      row.href = a.path;
+      row.setAttribute('download', '');
+      row.innerHTML =
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>' +
+        '<span>' + a.name + '</span>';
+      container.appendChild(row);
+    });
+  }
+
+  
+  function initHome() {
+  fetch('data/writing.json').then(function (r) { return r.json(); }).then(function (items) {
+      var sorted = items.slice().sort(function (a, b) {
         return (b.date || '').localeCompare(a.date || '');
       });
-      var top4Sermons = sortedSermons.slice(0, 4);
-
-      var sermonWrap = document.getElementById('sermon-cards');
-      sermonWrap.innerHTML = '';
-      top4Sermons.forEach(function (s) {
-        var related = items.filter(function (w) {
-          return w.tags && s.tags && w.tags.some(function (t) { return s.tags.indexOf(t) !== -1; });
-        })[0];
-
-        var card = document.createElement('div');
-        card.className = 'sermon-card';
-        var badge = [s.mainCategory, s.subCategory].filter(Boolean).join(' · ');
-        card.innerHTML =
-          '<div class="sermon-video"><iframe src="' + toYoutubeEmbed(s.video) + '" allowfullscreen></iframe></div>' +
-          '<div class="sermon-body">' +
-          '<span class="sermon-badge">' + badge + '</span>' +
-          '<a href="article.html?id=' + encodeURIComponent(s.id) + '" style="color:inherit;text-decoration:none;"><h3 class="sermon-title">' + s.title + '</h3></a>' +
-          '<p class="sermon-summary">' + (s.summary || '') + '</p>' +
-          (related ? '<a class="sermon-related" href="article.html?id=' + encodeURIComponent(related.id) + '">이 영상과 관련된 이야기 보기 →</a>' : '') +
+      var top4 = sorted.slice(0, 4);
+      var wrap = document.getElementById('writing-cards');
+      wrap.innerHTML = '';
+      top4.forEach(function (item) {
+        var a = document.createElement('a');
+        a.className = 'card';
+        a.href = 'index.html?id=' + encodeURIComponent(item.id);
+        var cat = [item.mainCategory, item.subCategory].filter(Boolean).join(' · ');
+        var tagsHtml = (item.tags || []).map(function (t) {
+          return '<span class="tag">' + t + '</span>';
+        }).join('');
+        a.innerHTML =
+          '<div class="thumb">' + (item.thumbnail ? '<img src="' + item.thumbnail + '" style="width:100%;height:100%;object-fit:cover;">' : '[대표 이미지]') + '</div>' +
+          '<div class="body">' +
+          '<span class="cat">' + cat + '</span>' +
+          '<h3>' + item.title + '</h3>' +
+          '<p>' + (item.summary || '') + '</p>' +
+          '<div class="tags">' + tagsHtml + '</div>' +
           '</div>';
-        sermonWrap.appendChild(card);
+        wrap.appendChild(a);
+      });
+  
+      // 설교 카드는 같은 태그를 가진 글과 연결해야 하므로 writing 목록을 함께 사용
+      fetch('data/sermons.json').then(function (r) { return r.json(); }).then(function (sermonItems) {
+        var withVideo = sermonItems.filter(function (s) { return s.video; });
+        var sortedSermons = withVideo.slice().sort(function (a, b) {
+          return (b.date || '').localeCompare(a.date || '');
+        });
+        var top4Sermons = sortedSermons.slice(0, 4);
+  
+        var sermonWrap = document.getElementById('sermon-cards');
+        sermonWrap.innerHTML = '';
+        top4Sermons.forEach(function (s) {
+          var related = items.filter(function (w) {
+            return w.tags && s.tags && w.tags.some(function (t) { return s.tags.indexOf(t) !== -1; });
+          })[0];
+  
+          var card = document.createElement('div');
+          card.className = 'sermon-card';
+          var badge = [s.mainCategory, s.subCategory].filter(Boolean).join(' · ');
+          card.innerHTML =
+            '<div class="sermon-video"><iframe src="' + toYoutubeEmbed(s.video) + '" allowfullscreen></iframe></div>' +
+            '<div class="sermon-body">' +
+            '<span class="sermon-badge">' + badge + '</span>' +
+            '<a href="index.html?id=' + encodeURIComponent(s.id) + '" style="color:inherit;text-decoration:none;"><h3 class="sermon-title">' + s.title + '</h3></a>' +
+            '<p class="sermon-summary">' + (s.summary || '') + '</p>' +
+            (related ? '<a class="sermon-related" href="index.html?id=' + encodeURIComponent(related.id) + '">이 영상과 관련된 이야기 보기 →</a>' : '') +
+            '</div>';
+          sermonWrap.appendChild(card);
+        });
       });
     });
+  }
+
+  function initArticle(articleId) {
+  Promise.all([
+      fetch('data/writing.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
+      fetch('data/sermons.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
+      fetch('data/lectures.json').then(function (r) { return r.json(); }).catch(function () { return []; })
+    ]).then(function (results) {
+      var writing = results[0].map(function (e) { return Object.assign({}, e, { sourceType: 'writing', pillLabel: '글' }); });
+      var sermons = results[1].map(function (e) { return Object.assign({}, e, { sourceType: 'sermon', pillLabel: '설교' }); });
+      var lectureWeeks = [];
+      (results[2] || []).forEach(function (course) {
+        (course.weeks || []).forEach(function (w) {
+          lectureWeeks.push({
+            id: w.id,
+            title: w.title,
+            mainCategory: '성경강의',
+            subCategory: w.subCategory || (course.title + ' · ' + w.week + '강'),
+            tags: w.tags || [],
+            summary: w.summary || '',
+            date: '',
+            video: w.video || '',
+            body: w.body || '',
+            sourceType: 'lecture',
+            pillLabel: '성경강의'
+          });
+        });
+      });
+      var all = writing.concat(sermons).concat(lectureWeeks);
+      var entry = all.filter(function (e) { return e.id === articleId; })[0];
+  
+      if (!entry) {
+        document.getElementById('a-notfound').style.display = 'block';
+        return;
+      }
+  
+      document.title = entry.title + ' | HONG-BRIDGE';
+      var metaDesc = document.querySelector('meta[name="description"]');
+      if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.setAttribute('name', 'description');
+        document.head.appendChild(metaDesc);
+      }
+      metaDesc.setAttribute('content', entry.summary || '');
+  
+      document.getElementById('article-loaded').style.display = 'block';
+      document.getElementById('a-cat').textContent = [entry.mainCategory, entry.subCategory].filter(Boolean).join(' · ');
+      document.getElementById('a-title').textContent = entry.title;
+      document.getElementById('a-date').textContent = entry.date || '';
+      renderTags(document.getElementById('a-tags'), entry.tags);
+      renderBody(document.getElementById('a-body'), entry.body);
+      renderAttachments(document.getElementById('a-attachments'), entry.attachments);
+  
+      if (entry.video) {
+        document.getElementById('a-video').style.display = 'block';
+        document.getElementById('a-video-frame').src = toYoutubeEmbed(entry.video);
+      }
+  
+      if (entry.tags && entry.tags.length) {
+        var related = all.filter(function (e) {
+          return e.id !== entry.id && e.tags && e.tags.some(function (t) { return entry.tags.indexOf(t) !== -1; });
+        }).slice(0, 5);
+  
+        if (related.length) {
+          var relWrap = document.getElementById('a-related-wrap');
+          var relList = document.getElementById('a-related');
+          relWrap.style.display = 'block';
+          related.forEach(function (r) {
+            var a = document.createElement('a');
+            a.className = 'tag-row';
+            a.href = 'index.html?id=' + encodeURIComponent(r.id);
+            a.innerHTML =
+              '<span class="pill">' + r.pillLabel + '</span>' +
+              '<span class="title">' + r.title + '</span>' +
+              '<span class="date">' + (r.date || '') + '</span>';
+            relList.appendChild(a);
+          });
+        }
+      }
+    });
+  
+  }
+
+var lecCourses = [];
+  var lecActiveCourseId = null;
+
+  function initLectures(courseParam) {
+  fetch('data/lectures.json').then(function (r) { return r.json(); }).then(function (data) {
+    lecCourses = data;
+    if (courseParam === 'ot') lecActiveCourseId = 'ot-10weeks';
+    else if (courseParam === 'nt') lecActiveCourseId = 'nt-10weeks';
+    else lecActiveCourseId = courses[0] && courses[0].id;
+
+    renderTabs();
+    renderCourse();
   });
+
+  function renderTabs() {
+    var wrap = document.getElementById('course-tabs');
+    wrap.innerHTML = '';
+    lecCourses.forEach(function (c) {
+      var btn = document.createElement('button');
+      btn.className = 'course-tab' + (c.id === lecActiveCourseId ? ' active' : '');
+      btn.textContent = c.title;
+      btn.addEventListener('click', function () {
+        lecActiveCourseId = c.id;
+        renderTabs();
+        renderCourse();
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  function renderCourse() {
+    var course = lecCourses.filter(function (c) { return c.id === lecActiveCourseId; })[0];
+    if (!course) return;
+
+    document.getElementById('course-summary').textContent = course.summary || '';
+
+    var listEl = document.getElementById('week-list');
+    listEl.innerHTML = '';
+    var weeks = course.weeks || [];
+    weeks.forEach(function (w) {
+      var a = document.createElement('a');
+      a.className = 'week-card';
+      a.href = 'index.html?id=' + encodeURIComponent(w.id);
+      a.innerHTML =
+        '<span class="week-num">' + w.week + '강</span>' +
+        '<span class="week-title">' + w.title + '</span>' +
+        '<span class="week-summary">' + (w.summary || '') + '</span>';
+      listEl.appendChild(a);
+    });
+  }
+
+  }
+
+  var routeParams = new URLSearchParams(window.location.search);
+  var routeId = routeParams.get('id');
+  var routePage = routeParams.get('page');
+
+  function showView(viewId) {
+    ['view-home', 'view-article', 'view-lectures'].forEach(function (v) {
+      document.getElementById(v).style.display = (v === viewId) ? '' : 'none';
+    });
+  }
+
+  if (routeId) {
+    showView('view-article');
+    initArticle(routeId);
+  } else if (routePage === 'lectures') {
+    showView('view-lectures');
+    initLectures(routeParams.get('course'));
+  } else {
+    showView('view-home');
+    initHome();
+  }
 </script>
 
 </body>
