@@ -422,10 +422,11 @@
           id: w.id,
           title: w.title,
           mainCategory: '성경강의',
-          subCategory: course.title + ' · ' + w.week + '강',
+          subCategory: w.subCategory || (course.title + ' · ' + w.week + '강'),
           tags: w.tags || [],
           summary: w.summary || '',
           date: '',
+          video: w.video || '',
           body: w.body || '',
           sourceType: 'lecture',
           pillLabel: '성경강의'

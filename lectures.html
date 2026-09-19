@@ -166,9 +166,16 @@
   .course-tab{padding:11px 22px;border-radius:999px;border:1.5px solid var(--brown);background:transparent;color:var(--brown);font-size:14.5px;font-weight:700;font-family:inherit;cursor:pointer;}
   .course-tab.active{background:var(--brown);color:var(--cream);}
   .course-summary{font-size:14.5px;color:var(--ink-soft);margin-bottom:24px;}
-  .load-more-wrap{display:flex;justify-content:center;margin-top:24px;}
-  .load-more-wrap button{padding:12px 30px;border:1.5px solid var(--brown);border-radius:999px;font-size:14px;font-weight:700;color:var(--brown);background:transparent;font-family:inherit;cursor:pointer;}
-  .load-more-wrap button:hover{background:var(--brown);color:var(--cream);}
+  .week-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+  .week-card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:8px;}
+  .week-card .week-num{font-size:12px;font-weight:700;color:var(--ink-faint);}
+  .week-card .week-title{font-size:15.5px;font-weight:700;color:var(--ink);line-height:1.45;}
+  .week-card .week-summary{font-size:13px;color:var(--ink-soft);line-height:1.6;}
+  .week-grid > .week-card:last-child:nth-child(3n+1){grid-column:2;}
+  @media (max-width:640px){
+    .week-grid{grid-template-columns:1fr;}
+    .week-grid > .week-card:last-child:nth-child(3n+1){grid-column:1;}
+  }
 </style>
 
 </head>
@@ -208,14 +215,11 @@
 <main>
   <div class="lec-wrap">
     <h1>성경 강의</h1>
-    <p class="lec-intro">구약과 신약, 각각 10주에 걸쳐 흐름을 따라가는 강의입니다.</p>
+    <p class="lec-intro">제가 사역했던 대구신광교회에서 구약, 신약 각 10주에 걸쳐 강의했던 내용입니다</p>
 
     <div class="course-tabs" id="course-tabs"></div>
     <div class="course-summary" id="course-summary"></div>
-    <div class="lecture-list" id="week-list"></div>
-    <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
-      <button id="load-more">더보기</button>
-    </div>
+    <div class="week-grid" id="week-list"></div>
   </div>
 </main>
 
@@ -271,7 +275,6 @@
 
   var courses = [];
   var activeCourseId = null;
-  var visibleCount = 3;
 
   var params = new URLSearchParams(window.location.search);
   var courseParam = params.get('course'); // 'ot' or 'nt'
@@ -295,7 +298,6 @@
       btn.textContent = c.title;
       btn.addEventListener('click', function () {
         activeCourseId = c.id;
-        visibleCount = 3;
         renderTabs();
         renderCourse();
       });
@@ -312,25 +314,17 @@
     var listEl = document.getElementById('week-list');
     listEl.innerHTML = '';
     var weeks = course.weeks || [];
-    weeks.slice(0, visibleCount).forEach(function (w) {
+    weeks.forEach(function (w) {
       var a = document.createElement('a');
-      a.className = 'lecture-row';
+      a.className = 'week-card';
       a.href = 'article.html?id=' + encodeURIComponent(w.id);
       a.innerHTML =
-        '<span class="lecture-title">' + w.week + '강. ' + w.title + '</span>' +
-        '<span class="lecture-desc">' + (w.summary || '') + '</span>' +
-        '<span class="arrow">→</span>';
+        '<span class="week-num">' + w.week + '강</span>' +
+        '<span class="week-title">' + w.title + '</span>' +
+        '<span class="week-summary">' + (w.summary || '') + '</span>';
       listEl.appendChild(a);
     });
-
-    var moreWrap = document.getElementById('load-more-wrap');
-    moreWrap.style.display = weeks.length > visibleCount ? 'flex' : 'none';
   }
-
-  document.getElementById('load-more').addEventListener('click', function () {
-    visibleCount += 3;
-    renderCourse();
-  });
 </script>
 
 </body>
