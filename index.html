@@ -98,6 +98,15 @@
   .card .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:9px;}
   .card .cat{font-size:12px;font-weight:700;color:var(--ink-faint);}
   .card h3{margin:0;font-size:17px;line-height:1.5;}
+
+  .sermon-card{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;}
+  .sermon-video{position:relative;width:100%;padding-top:56.25%;background:#000;}
+  .sermon-video iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+  .sermon-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;}
+  .sermon-badge{align-self:flex-start;font-size:11.5px;font-weight:700;color:#fff;background:#D9721A;padding:4px 12px;border-radius:999px;}
+  .sermon-title{margin:0;font-size:17px;font-weight:700;line-height:1.5;color:var(--ink);}
+  .sermon-summary{margin:0;font-size:14px;color:var(--ink-soft);line-height:1.6;}
+  .sermon-related{margin-top:4px;font-size:13.5px;font-weight:700;color:var(--brown);}
   .card p{margin:0;font-size:13.5px;color:var(--ink-soft);}
   .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;}
   .tag{font-size:11px;padding:4px 10px;background:var(--tag-bg);color:var(--tag-text);border-radius:999px;}
@@ -233,29 +242,7 @@
   <div class="section-head">
     <h2>설교</h2>
   </div>
-  <div class="grid2">
-
-    <a class="card" href="article.html?id=not-fitting-for-a-funeral">
-      <div class="thumb video">[설교 영상]</div>
-      <div class="body">
-        <span class="cat">요한복음 11:25–26</span>
-        <h3>장례식에 맞지 않는, 그러나 가장 잘 맞는 이야기</h3>
-        <p>죽음 앞에 선 회중에게 부활과 영생을 어떻게 전할 것인가.</p>
-        <div class="tags"><span class="tag">영생</span><span class="tag">장례설교</span></div>
-      </div>
-    </a>
-
-    <a class="card" href="article.html?id=why-the-light-came">
-      <div class="thumb video">[설교 영상]</div>
-      <div class="body">
-        <span class="cat">요한복음 1장</span>
-        <h3>빛으로 오신 이유</h3>
-        <p>어둠을 이기는 빛이 아니라, 어둠 속에 함께 있는 빛에 대하여.</p>
-        <div class="tags"><span class="tag">빛과어둠</span></div>
-      </div>
-    </a>
-
-  </div>
+  <div class="grid2" id="sermon-cards"></div>
   <div class="section-more"><a href="#">설교 전체보기</a></div>
 </section>
 
@@ -358,6 +345,42 @@
         '<div class="tags">' + tagsHtml + '</div>' +
         '</div>';
       wrap.appendChild(a);
+    });
+
+    // 설교 카드는 같은 태그를 가진 글과 연결해야 하므로 writing 목록을 함께 사용
+    fetch('data/sermons.json').then(function (r) { return r.json(); }).then(function (sermonItems) {
+      function toYoutubeEmbed(url) {
+        if (!url) return '';
+        var m = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+        return m ? 'https://www.youtube.com/embed/' + m[1] : url;
+      }
+
+      var withVideo = sermonItems.filter(function (s) { return s.video; });
+      var sortedSermons = withVideo.slice().sort(function (a, b) {
+        return (b.date || '').localeCompare(a.date || '');
+      });
+      var top4Sermons = sortedSermons.slice(0, 4);
+
+      var sermonWrap = document.getElementById('sermon-cards');
+      sermonWrap.innerHTML = '';
+      top4Sermons.forEach(function (s) {
+        var related = items.filter(function (w) {
+          return w.tags && s.tags && w.tags.some(function (t) { return s.tags.indexOf(t) !== -1; });
+        })[0];
+
+        var card = document.createElement('div');
+        card.className = 'sermon-card';
+        var badge = [s.mainCategory, s.subCategory].filter(Boolean).join(' · ');
+        card.innerHTML =
+          '<div class="sermon-video"><iframe src="' + toYoutubeEmbed(s.video) + '" allowfullscreen></iframe></div>' +
+          '<div class="sermon-body">' +
+          '<span class="sermon-badge">' + badge + '</span>' +
+          '<a href="article.html?id=' + encodeURIComponent(s.id) + '" style="color:inherit;text-decoration:none;"><h3 class="sermon-title">' + s.title + '</h3></a>' +
+          '<p class="sermon-summary">' + (s.summary || '') + '</p>' +
+          (related ? '<a class="sermon-related" href="article.html?id=' + encodeURIComponent(related.id) + '">이 영상과 관련된 이야기 보기 →</a>' : '') +
+          '</div>';
+        sermonWrap.appendChild(card);
+      });
     });
   });
 </script>
