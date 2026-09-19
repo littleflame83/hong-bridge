@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HONG-BRIDGE</title>
+<title>성경 강의 | HONG-BRIDGE</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
   :root{
@@ -157,11 +157,25 @@
     .lecture-desc{width:100%;}
   }
 </style>
+
+<style>
+  .lec-wrap{max-width:760px;margin:0 auto;padding:64px 6vw 40px;}
+  .lec-wrap h1{margin:0 0 10px;font-size:clamp(26px,4vw,34px);font-weight:900;}
+  .lec-wrap .lec-intro{margin:0 0 32px;font-size:15.5px;color:var(--ink-soft);}
+  .course-tabs{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+  .course-tab{padding:11px 22px;border-radius:999px;border:1.5px solid var(--brown);background:transparent;color:var(--brown);font-size:14.5px;font-weight:700;font-family:inherit;cursor:pointer;}
+  .course-tab.active{background:var(--brown);color:var(--cream);}
+  .course-summary{font-size:14.5px;color:var(--ink-soft);margin-bottom:24px;}
+  .load-more-wrap{display:flex;justify-content:center;margin-top:24px;}
+  .load-more-wrap button{padding:12px 30px;border:1.5px solid var(--brown);border-radius:999px;font-size:14px;font-weight:700;color:var(--brown);background:transparent;font-family:inherit;cursor:pointer;}
+  .load-more-wrap button:hover{background:var(--brown);color:var(--cream);}
+</style>
+
 </head>
 <body>
 
 <header>
-  <a class="brand-mark" href="#top">
+  <a class="brand-mark" href="index.html">
     <img src="data:image/png;base64,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" alt="HONG-BRIDGE 로고">
     <span class="brand">HONG-BRIDGE</span>
   </a>
@@ -169,9 +183,9 @@
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
   <nav id="main-nav">
-    <a href="#writing">글</a>
-    <a href="#lectures">성경강의</a>
-    <a href="#sermons">설교</a>
+    <a href="index.html#writing">글</a>
+    <a href="index.html#lectures">성경강의</a>
+    <a href="index.html#sermons">설교</a>
     <a href="#">소개</a>
     <button class="icon-btn" type="button" aria-label="검색">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -187,102 +201,23 @@
         <a href="#">ខ្មែរ</a>
       </div>
     </div>
-    <a class="cta" href="#contact">강의·설교 문의</a>
+    <a class="cta" href="index.html#contact">강의·설교 문의</a>
   </nav>
 </header>
 
-<section id="top" class="hero">
-  <p class="lede">신학과 목회를 잇는 이야기</p>
-  <h1>성경을 읽고 신학을 공부하며 목회를 생각합니다</h1>
-  <p class="sub">성경과 신학에 대한 공부, 설교와 목회 현장에서의 생각을 기록합니다.</p>
-</section>
+<main>
+  <div class="lec-wrap">
+    <h1>성경 강의</h1>
+    <p class="lec-intro">구약과 신약, 각각 10주에 걸쳐 흐름을 따라가는 강의입니다.</p>
 
-<!-- ===== 글 ===== -->
-<section id="writing">
-  <div class="section-head">
-    <h2>글</h2>
+    <div class="course-tabs" id="course-tabs"></div>
+    <div class="course-summary" id="course-summary"></div>
+    <div class="lecture-list" id="week-list"></div>
+    <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
+      <button id="load-more">더보기</button>
+    </div>
   </div>
-  <div class="grid2" id="writing-cards"></div>
-  <div class="section-more"><a href="#">글 이야기 전체보기</a></div>
-</section>
-
-<!-- ===== 성경 강의 ===== -->
-<section id="lectures">
-  <div class="section-head">
-    <h2>성경 강의</h2>
-  </div>
-  <div class="lecture-list">
-
-    <a class="lecture-row" href="lectures.html?course=ot">
-      <span class="lecture-title">구약성경 10주</span>
-      <span class="lecture-desc">구약성경 전체를 하나의 흐름으로 이해하기 위한 10주 강의</span>
-      <span class="arrow">→</span>
-    </a>
-
-    <a class="lecture-row" href="lectures.html?course=nt">
-      <span class="lecture-title">신약성경 10주</span>
-      <span class="lecture-desc">복음서에서 서신서까지, 신약을 관통하는 이야기를 따라간다</span>
-      <span class="arrow">→</span>
-    </a>
-
-  </div>
-</section>
-
-<!-- ===== 설교 ===== -->
-<section id="sermons">
-  <div class="section-head">
-    <h2>설교</h2>
-  </div>
-  <div class="grid2">
-
-    <a class="card" href="article.html?id=not-fitting-for-a-funeral">
-      <div class="thumb video">[설교 영상]</div>
-      <div class="body">
-        <span class="cat">요한복음 11:25–26</span>
-        <h3>장례식에 맞지 않는, 그러나 가장 잘 맞는 이야기</h3>
-        <p>죽음 앞에 선 회중에게 부활과 영생을 어떻게 전할 것인가.</p>
-        <div class="tags"><span class="tag">영생</span><span class="tag">장례설교</span></div>
-      </div>
-    </a>
-
-    <a class="card" href="article.html?id=why-the-light-came">
-      <div class="thumb video">[설교 영상]</div>
-      <div class="body">
-        <span class="cat">요한복음 1장</span>
-        <h3>빛으로 오신 이유</h3>
-        <p>어둠을 이기는 빛이 아니라, 어둠 속에 함께 있는 빛에 대하여.</p>
-        <div class="tags"><span class="tag">빛과어둠</span></div>
-      </div>
-    </a>
-
-  </div>
-  <div class="section-more"><a href="#">설교 전체보기</a></div>
-</section>
-
-<!-- ===== 태그로 연결된 글 (크로스링크 데모) ===== -->
-<section class="tag-section">
-  <span class="kicker">태그로 연결된 글</span>
-  <h2>#영생</h2>
-  <p style="margin:0;font-size:14px;color:var(--ink-soft);">메뉴 구분과 상관없이, 같은 주제를 다룬 글을 한 곳에서 볼 수 있습니다.</p>
-
-  <div class="tag-list">
-    <a class="tag-row" href="#">
-      <span class="pill">글</span>
-      <span class="title">영생 개념의 신학사적 변천 — 공관복음과 요한복음의 차이</span>
-      <span class="date">2026.08.14</span>
-    </a>
-    <a class="tag-row" href="#">
-      <span class="pill">설교</span>
-      <span class="title">장례식에 맞지 않는, 그러나 가장 잘 맞는 이야기</span>
-      <span class="date">2026.09.01</span>
-    </a>
-    <a class="tag-row" href="#">
-      <span class="pill">성경 강의</span>
-      <span class="title">신약성경 10주 — 3강: 영생과 하나님나라</span>
-      <span class="date">2026.09.10</span>
-    </a>
-  </div>
-</section>
+</main>
 
 <footer>
   <div class="foot-row">
@@ -334,31 +269,67 @@
     langSelect.classList.remove('open');
   });
 
-  fetch('data/writing.json').then(function (r) { return r.json(); }).then(function (items) {
-    var sorted = items.slice().sort(function (a, b) {
-      return (b.date || '').localeCompare(a.date || '');
-    });
-    var top4 = sorted.slice(0, 4);
-    var wrap = document.getElementById('writing-cards');
+  var courses = [];
+  var activeCourseId = null;
+  var visibleCount = 3;
+
+  var params = new URLSearchParams(window.location.search);
+  var courseParam = params.get('course'); // 'ot' or 'nt'
+
+  fetch('data/lectures.json').then(function (r) { return r.json(); }).then(function (data) {
+    courses = data;
+    if (courseParam === 'ot') activeCourseId = 'ot-10weeks';
+    else if (courseParam === 'nt') activeCourseId = 'nt-10weeks';
+    else activeCourseId = courses[0] && courses[0].id;
+
+    renderTabs();
+    renderCourse();
+  });
+
+  function renderTabs() {
+    var wrap = document.getElementById('course-tabs');
     wrap.innerHTML = '';
-    top4.forEach(function (item) {
-      var a = document.createElement('a');
-      a.className = 'card';
-      a.href = 'article.html?id=' + encodeURIComponent(item.id);
-      var cat = [item.mainCategory, item.subCategory].filter(Boolean).join(' · ');
-      var tagsHtml = (item.tags || []).map(function (t) {
-        return '<span class="tag">' + t + '</span>';
-      }).join('');
-      a.innerHTML =
-        '<div class="thumb">' + (item.thumbnail ? '<img src="' + item.thumbnail + '" style="width:100%;height:100%;object-fit:cover;">' : '[대표 이미지]') + '</div>' +
-        '<div class="body">' +
-        '<span class="cat">' + cat + '</span>' +
-        '<h3>' + item.title + '</h3>' +
-        '<p>' + (item.summary || '') + '</p>' +
-        '<div class="tags">' + tagsHtml + '</div>' +
-        '</div>';
-      wrap.appendChild(a);
+    courses.forEach(function (c) {
+      var btn = document.createElement('button');
+      btn.className = 'course-tab' + (c.id === activeCourseId ? ' active' : '');
+      btn.textContent = c.title;
+      btn.addEventListener('click', function () {
+        activeCourseId = c.id;
+        visibleCount = 3;
+        renderTabs();
+        renderCourse();
+      });
+      wrap.appendChild(btn);
     });
+  }
+
+  function renderCourse() {
+    var course = courses.filter(function (c) { return c.id === activeCourseId; })[0];
+    if (!course) return;
+
+    document.getElementById('course-summary').textContent = course.summary || '';
+
+    var listEl = document.getElementById('week-list');
+    listEl.innerHTML = '';
+    var weeks = course.weeks || [];
+    weeks.slice(0, visibleCount).forEach(function (w) {
+      var a = document.createElement('a');
+      a.className = 'lecture-row';
+      a.href = 'article.html?id=' + encodeURIComponent(w.id);
+      a.innerHTML =
+        '<span class="lecture-title">' + w.week + '강. ' + w.title + '</span>' +
+        '<span class="lecture-desc">' + (w.summary || '') + '</span>' +
+        '<span class="arrow">→</span>';
+      listEl.appendChild(a);
+    });
+
+    var moreWrap = document.getElementById('load-more-wrap');
+    moreWrap.style.display = weeks.length > visibleCount ? 'flex' : 'none';
+  }
+
+  document.getElementById('load-more').addEventListener('click', function () {
+    visibleCount += 3;
+    renderCourse();
   });
 </script>
 

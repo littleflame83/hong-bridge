@@ -368,11 +368,29 @@
 
   Promise.all([
     fetch('data/writing.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
-    fetch('data/sermons.json').then(function (r) { return r.json(); }).catch(function () { return []; })
+    fetch('data/sermons.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
+    fetch('data/lectures.json').then(function (r) { return r.json(); }).catch(function () { return []; })
   ]).then(function (results) {
     var writing = results[0].map(function (e) { return Object.assign({}, e, { sourceType: 'writing', pillLabel: '글' }); });
     var sermons = results[1].map(function (e) { return Object.assign({}, e, { sourceType: 'sermon', pillLabel: '설교' }); });
-    var all = writing.concat(sermons);
+    var lectureWeeks = [];
+    (results[2] || []).forEach(function (course) {
+      (course.weeks || []).forEach(function (w) {
+        lectureWeeks.push({
+          id: w.id,
+          title: w.title,
+          mainCategory: '성경강의',
+          subCategory: course.title + ' · ' + w.week + '강',
+          tags: w.tags || [],
+          summary: w.summary || '',
+          date: '',
+          body: w.body || '',
+          sourceType: 'lecture',
+          pillLabel: '성경강의'
+        });
+      });
+    });
+    var all = writing.concat(sermons).concat(lectureWeeks);
     var entry = all.filter(function (e) { return e.id === articleId; })[0];
 
     if (!entry) {
