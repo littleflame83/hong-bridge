@@ -96,7 +96,8 @@
   .brand-mark img{height:34px;width:auto;}
   .brand{font-size:22px;font-weight:700;letter-spacing:.3px;}
   nav{display:flex;align-items:center;gap:26px;font-size:15px;font-weight:500;}
-  nav a.cta{padding:9px 18px;background:var(--brown);color:var(--cream);border-radius:4px;}
+  nav a.cta{padding:9px 18px;background:var(--brown);color:#fff;border-radius:999px;transition:background-color .15s ease;}
+  nav a.cta:hover{background:var(--brown-dark);}
   .icon-btn{background:none;border:none;cursor:pointer;color:var(--ink);display:flex;align-items:center;padding:2px;}
   .lang-select{position:relative;}
   .lang-btn{background:none;border:none;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;font-family:inherit;padding:2px;}
@@ -184,7 +185,7 @@
   .badges .badge{display:flex;align-items:center;gap:9px;font-size:13px;color:rgba(255,255,255,.6);}
   .badges .badge img{height:20px;width:20px;object-fit:contain;flex-shrink:0;}
   .foot-contact .label{font-size:12px;font-weight:600;color:rgba(255,255,255,.6);margin-bottom:8px;}
-  .contact-label{color:#F97316;letter-spacing:.18em;}
+  .foot-contact .label.contact-label{color:#F97316;letter-spacing:.18em;}
   .foot-contact div.row{font-size:13.5px;margin-top:6px;color:rgba(255,255,255,.7);}
   .social-row{display:flex;gap:10px;margin-top:14px;}
   .social-btn{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);}
@@ -241,8 +242,10 @@
     .article-cta-group{grid-template-columns:1fr;}
   }
   .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;}
-  .cta-btn-outline{background:transparent;border:1.5px solid var(--brown);color:var(--brown);}
-  .cta-btn-solid{background:var(--brown);color:#fff;}
+  .cta-btn-outline{background:transparent;border:1.5px solid var(--brown);color:var(--brown);transition:background-color .15s ease,color .15s ease;}
+  .cta-btn-outline:hover{background:var(--brown);color:#fff;}
+  .cta-btn-solid{background:var(--brown);color:#fff;transition:background-color .15s ease;}
+  .cta-btn-solid:hover{background:var(--brown-dark);}
   .cta-apply{background:transparent;border:1.5px solid var(--line);}
   .related-wrap{max-width:820px;margin:0 auto;padding:0 24px 64px;}
 
@@ -278,7 +281,7 @@
 
 </style>
 <style>
-.lec-wrap{max-width:760px;margin:0 auto;padding:64px 6vw 40px;}
+.lec-wrap{max-width:1080px;margin:0 auto;padding:64px 24px 40px;}
   .lec-wrap h1{margin:0 0 10px;font-size:clamp(26px,4vw,34px);font-weight:900;}
   .lec-wrap .lec-intro{margin:0 0 32px;font-size:15.5px;color:var(--ink-soft);}
   .course-tabs{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
@@ -402,7 +405,7 @@
     <h2>설교</h2>
   </div>
   <div class="grid2" id="sermon-cards"></div>
-  <div class="section-more"><a href="#">설교 전체보기</a></div>
+  <div class="section-more"><a href="index.html?page=sermons">설교 전체보기</a></div>
 </section>
 
 <!-- ===== 태그로 연결된 글 (크로스링크 데모) ===== -->
@@ -704,7 +707,6 @@
     </div>
     <div id="contact" class="foot-contact">
       <div class="label contact-label">CONTACT</div>
-      <div class="row" style="margin-top:0;">그 밖의 일반적인 연락은 카카오톡으로 편하게 문의해 주세요.</div>
       <div class="row">littleflame83@gmail.com</div>
       <div class="social-row">
         <a class="social-btn" href="https://open.kakao.com/o/sKmOMV4h" aria-label="KakaoTalk">
