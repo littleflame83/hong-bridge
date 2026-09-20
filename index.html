@@ -181,16 +181,16 @@
   .foot-brand img{height:26px;width:auto;filter:invert(1) brightness(2);}
   .foot-brand span{font-size:17px;font-weight:700;}
   .badges{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
-  .badges .badge{display:flex;align-items:center;gap:9px;font-size:13px;color:#C4B8A5;}
+  .badges .badge{display:flex;align-items:center;gap:9px;font-size:13px;color:rgba(255,255,255,.6);}
   .badges .badge img{height:20px;width:20px;object-fit:contain;flex-shrink:0;}
-  .foot-contact .label{font-size:12px;font-weight:700;color:#C4B8A5;margin-bottom:8px;}
-  .contact-label{color:#FDBA74;letter-spacing:1.5px;}
-  .foot-contact div.row{font-size:13.5px;margin-top:6px;}
+  .foot-contact .label{font-size:12px;font-weight:600;color:rgba(255,255,255,.6);margin-bottom:8px;}
+  .contact-label{color:#F97316;letter-spacing:.18em;}
+  .foot-contact div.row{font-size:13.5px;margin-top:6px;color:rgba(255,255,255,.7);}
   .social-row{display:flex;gap:10px;margin-top:14px;}
-  .social-btn{width:34px;height:34px;border-radius:50%;background:rgba(253,252,248,.12);display:flex;align-items:center;justify-content:center;color:#FDFCF8;}
-  .social-btn:hover{background:rgba(253,252,248,.22);}
+  .social-btn{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);}
+  .social-btn:hover{background:rgba(255,255,255,.15);}
   .social-btn svg{width:16px;height:16px;}
-  .copyright{border-top:1px solid #3A342C;margin-top:26px;padding-top:18px;font-size:12px;color:#A79C8D;}
+  .copyright{border-top:1px solid rgba(255,255,255,.1);margin-top:26px;padding-top:18px;font-size:12px;color:rgba(255,255,255,.35);}
 
   @media (max-width:900px){
     .menu-toggle{display:block;}
@@ -232,11 +232,15 @@
   .attachments-label{font-size:12px;font-weight:700;color:var(--ink-faint);margin-bottom:10px;}
   .attachment-row{display:inline-flex;align-items:center;gap:9px;font-size:14.5px;color:var(--cream);font-weight:700;padding:12px 22px;background:var(--brown);border-radius:999px;}
   .attachment-row:hover{opacity:.9;}
-  .article-cta-group{display:flex;flex-direction:column;gap:14px;margin:40px 0;}
-  .cta-block{padding:20px 22px;border-radius:10px;background:var(--cream-deep);}
-  .cta-block .cta-title{margin:0 0 6px;font-weight:700;color:var(--ink);font-size:15px;}
-  .cta-block .cta-desc{margin:0 0 14px;font-size:13.5px;color:var(--ink-soft);}
-  .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;border-radius:999px;font-size:14px;font-weight:700;}
+  .article-cta-group{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:40px 0;}
+  .cta-block{padding:18px 20px;border-radius:10px;background:var(--cream-deep);display:flex;flex-direction:column;}
+  .cta-block .cta-title{margin:0 0 6px;font-weight:700;color:var(--ink);font-size:14.5px;line-height:1.4;}
+  .cta-block .cta-desc{margin:0 0 12px;font-size:12.5px;color:var(--ink-soft);line-height:1.5;}
+  .cta-block .cta-btn{margin-top:auto;align-self:flex-start;}
+  @media (max-width:640px){
+    .article-cta-group{grid-template-columns:1fr;}
+  }
+  .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;}
   .cta-btn-outline{background:transparent;border:1.5px solid var(--brown);color:var(--brown);}
   .cta-btn-solid{background:var(--brown);color:#fff;}
   .cta-apply{background:transparent;border:1.5px solid var(--line);}
@@ -333,7 +337,7 @@
   <nav id="main-nav">
     <a href="index.html#writing">글</a>
     <a href="index.html?page=lectures">성경강의</a>
-    <a href="index.html#sermons">설교</a>
+    <a href="index.html?page=sermons">설교</a>
     <a href="index.html?page=intro">소개</a>
     <button class="icon-btn" type="button" aria-label="검색">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -659,6 +663,16 @@
 </main>
 </div>
 
+<div id="view-sermons" style="display:none;">
+<main>
+  <div class="lec-wrap">
+    <h1>설교</h1>
+    <p class="lec-intro">본문을 따라간 설교를 영상으로 만나보실 수 있습니다.</p>
+    <div class="week-grid" id="sermon-list"></div>
+  </div>
+</main>
+</div>
+
 <!-- 성경 강의 영상 라이트박스 -->
 <div class="lecture-video-modal hidden" id="lectureVideoModal" role="dialog" aria-modal="true" aria-label="성경 강의 영상">
   <div class="lecture-video-box">
@@ -690,7 +704,7 @@
     </div>
     <div id="contact" class="foot-contact">
       <div class="label contact-label">CONTACT</div>
-      <div class="row" style="margin-top:0;color:var(--footer-text);opacity:.85;">그 밖의 일반적인 연락은 카카오톡으로 편하게 문의해 주세요.</div>
+      <div class="row" style="margin-top:0;">그 밖의 일반적인 연락은 카카오톡으로 편하게 문의해 주세요.</div>
       <div class="row">littleflame83@gmail.com</div>
       <div class="social-row">
         <a class="social-btn" href="https://open.kakao.com/o/sKmOMV4h" aria-label="KakaoTalk">
@@ -1150,11 +1164,46 @@ var lecCourses = [];
   }
 
   function showView(viewId) {
-    ['view-home', 'view-article', 'view-lectures', 'view-intro', 'view-apply'].forEach(function (v) {
+    ['view-home', 'view-article', 'view-lectures', 'view-intro', 'view-apply', 'view-sermons'].forEach(function (v) {
       document.getElementById(v).style.display = (v === viewId) ? '' : 'none';
     });
     requestAnimationFrame(function () {
       observeReveals(document.getElementById(viewId));
+    });
+  }
+
+  function initSermonsPage() {
+    fetch('data/sermons.json').then(function (r) { return r.json(); }).then(function (items) {
+      var sorted = items.slice().sort(function (a, b) {
+        return (b.date || '').localeCompare(a.date || '');
+      });
+      var listEl = document.getElementById('sermon-list');
+      listEl.innerHTML = '';
+      sorted.forEach(function (s) {
+        var card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'week-card';
+        var videoId = getYoutubeId(s.video);
+        var thumb = videoId ? 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg' : '';
+        card.innerHTML =
+          '<div class="week-thumb">' +
+            (thumb ? '<img src="' + thumb + '" alt="' + escapeHtml(s.title) + '" loading="lazy">' : '') +
+            (videoId ? '<span class="week-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5z"></path></svg></span>' : '') +
+          '</div>' +
+          '<div class="week-body">' +
+            '<span class="week-num">' + escapeHtml(s.subCategory || s.mainCategory || '') + '</span>' +
+            '<span class="week-title">' + escapeHtml(s.title || '') + '</span>' +
+            (s.summary ? '<span class="week-summary">' + escapeHtml(s.summary) + '</span>' : '') +
+          '</div>';
+        card.addEventListener('click', function () {
+          if (s.video) {
+            openLectureVideo(s.video, s.title);
+          } else {
+            window.location.href = 'index.html?id=' + encodeURIComponent(s.id);
+          }
+        });
+        listEl.appendChild(card);
+      });
     });
   }
 
@@ -1164,6 +1213,9 @@ var lecCourses = [];
   } else if (routePage === 'lectures') {
     showView('view-lectures');
     initLectures(routeParams.get('course'));
+  } else if (routePage === 'sermons') {
+    showView('view-sermons');
+    initSermonsPage();
   } else if (routePage === 'intro') {
     showView('view-intro');
   } else if (routePage === 'apply') {
