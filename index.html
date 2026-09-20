@@ -225,15 +225,21 @@
   .article-body p{margin:0 0 18px;}
   .article-body img{max-width:100%;border-radius:6px;}
   .article-h3{font-size:19px;font-weight:700;margin:28px 0 14px;color:var(--ink);}
-  .scripture-quote{margin:0 0 18px;padding:14px 20px;background:var(--cream-deep);border-left:4px solid var(--brown);border-radius:0 6px 6px 0;font-style:italic;font-size:15.5px;line-height:1.55;color:var(--ink-soft);}
-  .scripture-quote cite{display:block;margin-top:6px;font-style:normal;font-size:13px;font-weight:700;color:var(--ink-faint);}
+  .scripture-quote{margin:0 0 14px;padding:10px 16px;background:var(--cream-deep);border-left:4px solid var(--brown);border-radius:0 6px 6px 0;font-style:italic;font-size:14px;line-height:1.4;color:var(--ink-soft);}
+  .scripture-quote cite{display:block;margin-top:4px;font-style:normal;font-size:12px;font-weight:700;color:var(--ink-faint);}
   .article-note{margin:0 0 18px;font-weight:700;color:var(--brown);}
   .attachments{margin-bottom:32px;padding:18px 20px;background:var(--card);border:1px solid var(--line);border-radius:6px;}
   .attachments-label{font-size:12px;font-weight:700;color:var(--ink-faint);margin-bottom:10px;}
   .attachment-row{display:inline-flex;align-items:center;gap:9px;font-size:14.5px;color:var(--cream);font-weight:700;padding:12px 22px;background:var(--brown);border-radius:999px;}
   .attachment-row:hover{opacity:.9;}
-  .article-cta{margin:40px 0;padding:22px 24px;background:var(--cream-deep);border-radius:6px;font-size:14.5px;color:var(--ink-soft);}
-  .article-cta a{font-weight:700;color:var(--brown);}
+  .article-cta-group{display:flex;flex-direction:column;gap:14px;margin:40px 0;}
+  .cta-block{padding:20px 22px;border-radius:10px;background:var(--cream-deep);}
+  .cta-block .cta-title{margin:0 0 6px;font-weight:700;color:var(--ink);font-size:15px;}
+  .cta-block .cta-desc{margin:0 0 14px;font-size:13.5px;color:var(--ink-soft);}
+  .cta-btn{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;border-radius:999px;font-size:14px;font-weight:700;}
+  .cta-btn-outline{background:transparent;border:1.5px solid var(--brown);color:var(--brown);}
+  .cta-btn-solid{background:var(--brown);color:#fff;}
+  .cta-apply{background:transparent;border:1.5px solid var(--line);}
   .related-wrap{max-width:820px;margin:0 auto;padding:0 24px 64px;}
 
   .apply-wrap{max-width:720px;margin:0 auto;padding:64px 24px 80px;}
@@ -343,7 +349,7 @@
         <a href="#">ខ្មែរ</a>
       </div>
     </div>
-    <a class="cta" href="index.html?page=apply">강의·설교 문의</a>
+    <a class="cta" href="index.html?page=apply">설교·강의 신청</a>
   </nav>
 </header>
 <div id="view-home">
@@ -437,9 +443,16 @@
     <div class="attachments" id="a-attachments" style="display:none;">
       <div class="attachments-label">첨부파일</div>
     </div>
-    <div class="article-cta">
-      이 글에 대해 더 이야기하고 싶으신가요?<br>
-      설교·강의·신학적 대화에 관한 문의는 <a href="index.html?page=apply">여기로 연락</a>해 주세요.
+    <div class="article-cta-group">
+      <div class="cta-block cta-chat">
+        <p class="cta-title">이 글에 대해 더 이야기하고 싶으신가요?</p>
+        <p class="cta-desc">글의 내용에 대한 질문이나 생각은 <strong>여기에서 편하게 나눠주세요.</strong></p>
+        <a class="cta-btn cta-btn-outline" href="https://open.kakao.com/o/sKmOMV4h" target="_blank" rel="noopener">💬 글에 대해 이야기하기</a>
+      </div>
+      <div class="cta-block cta-apply">
+        <p class="cta-title">설교나 강의를 요청하고 싶으신가요?</p>
+        <a class="cta-btn cta-btn-solid" href="index.html?page=apply">설교·강의 신청하기 →</a>
+      </div>
     </div>
   </div>
   <div class="not-found" id="a-notfound" style="display:none;">
@@ -676,7 +689,8 @@
       </div>
     </div>
     <div id="contact" class="foot-contact">
-      <div class="label contact-label">강의·설교 문의</div>
+      <div class="label contact-label">CONTACT</div>
+      <div class="row" style="margin-top:0;color:var(--footer-text);opacity:.85;">그 밖의 일반적인 연락은 카카오톡으로 편하게 문의해 주세요.</div>
       <div class="row">littleflame83@gmail.com</div>
       <div class="social-row">
         <a class="social-btn" href="https://open.kakao.com/o/sKmOMV4h" aria-label="KakaoTalk">
@@ -1127,7 +1141,7 @@ var lecCourses = [];
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0, rootMargin: '0px 0px -10px 0px' });
 
   function observeReveals(root) {
     (root || document).querySelectorAll('.reveal:not(.in-view)').forEach(function (el) {
