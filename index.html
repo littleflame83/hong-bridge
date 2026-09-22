@@ -135,6 +135,13 @@
   .lecture-row .arrow{color:var(--ink-faint);font-size:16px;}
 
   .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;}
+  .writing-list-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+  @media (max-width:900px){
+    .writing-list-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media (max-width:560px){
+    .writing-list-grid{grid-template-columns:1fr;}
+  }
   .card{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;}
   .card .thumb{width:100%;height:160px;background:#F0EBE0;display:flex;align-items:center;justify-content:center;color:#A79C8D;font-size:13px;position:relative;}
   .card .thumb.video::after{
@@ -384,7 +391,7 @@
     <h2>글</h2>
   </div>
   <div class="grid2" id="writing-cards"></div>
-  <div class="section-more"><a href="#">글 이야기 전체보기</a></div>
+  <div class="section-more"><a href="index.html?page=writing">글 전체보기</a></div>
 </section>
 
 <!-- ===== 성경 강의 ===== -->
@@ -548,7 +555,7 @@
 <summary class="cursor-pointer list-none py-6 sm:py-8 flex items-start justify-between gap-4">
 <span class="flex items-baseline gap-3 sm:gap-5">
 <span class="about-question-number text-2xl sm:text-3xl font-black text-ink-900/15 leading-none">03</span>
-<span class="text-lg sm:text-2xl font-bold text-ink-900 leading-snug">어디서 무얼하며 살고 있나요?</span>
+<span class="text-lg sm:text-2xl font-bold text-ink-900 leading-snug">어디서 무엇을 하며 살고 있나요?</span>
 </span>
 <span class="about-question-icon text-ink-300 text-2xl shrink-0 mt-1 sm:mt-1.5">＋</span>
 </summary>
@@ -698,7 +705,7 @@
   <div class="lec-wrap">
     <h1>글</h1>
     <p class="lec-intro">성경을 읽고 신학을 공부하며 정리한 글입니다.</p>
-    <div class="grid2" id="writing-list-grid" style="grid-template-columns:repeat(3,minmax(0,1fr));"></div>
+    <div class="grid2 writing-list-grid" id="writing-list-grid"></div>
   </div>
 </main>
 </div>
