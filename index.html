@@ -240,6 +240,37 @@
 </style>
 
 <style>
+.search-overlay{position:fixed;inset:0;background:rgba(20,14,9,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1100;padding:16px;}
+.search-overlay.hidden{display:none;}
+.search-panel{position:relative;width:100%;max-width:900px;max-height:88vh;margin:24px auto 0;background:var(--card);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.35);overflow-y:auto;}
+.search-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:12px;padding:18px 22px;background:var(--card);border-bottom:1px solid var(--line);}
+.search-head svg{flex-shrink:0;color:var(--ink-faint);}
+.search-head input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:16px;font-weight:600;color:var(--ink);outline:none;}
+.search-head button{flex-shrink:0;width:34px;height:34px;border:0;border-radius:50%;background:var(--cream-deep);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.search-body{padding:22px;}
+.search-summary{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:22px;flex-wrap:wrap;}
+.search-eyebrow{margin:0 0 6px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--brown);}
+.search-summary h2{margin:0;font-size:20px;font-weight:800;color:var(--ink);}
+.search-hint{margin:4px 0 0;font-size:12px;color:var(--ink-faint);}
+#searchResultCount{font-size:12px;color:var(--ink-faint);white-space:nowrap;}
+.search-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.search-none{display:block;text-align:center;font-size:14px;color:var(--ink-faint);padding:44px 0;}
+.search-none.hidden{display:none;}
+.search-card{text-align:left;background:var(--cream);border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;padding:0;font:inherit;color:inherit;transition:box-shadow .15s ease,border-color .15s ease;}
+.search-card:hover{border-color:var(--brown);box-shadow:0 8px 20px rgba(43,32,19,.1);}
+.search-card .thumb{aspect-ratio:4/3;background:var(--cream-deep);overflow:hidden;}
+.search-card .thumb img{width:100%;height:100%;object-fit:cover;}
+.search-card .body{padding:12px 14px 14px;}
+.search-card .cat{display:block;font-size:10.5px;font-weight:800;letter-spacing:.06em;color:var(--brown);text-transform:uppercase;}
+.search-card .title{display:block;margin-top:5px;font-size:14.5px;font-weight:750;color:var(--ink);line-height:1.4;}
+.search-card .summary{display:block;margin-top:5px;font-size:12.5px;color:var(--ink-soft);line-height:1.5;}
+@media (max-width:760px){
+  .search-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width:480px){
+  .search-grid{grid-template-columns:1fr;}
+  .search-panel{margin-top:0;max-height:100vh;border-radius:0;}
+}
 .article-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;}
 .article-modal.hidden{display:none;}
 .article-modal-box{background:var(--cream);width:min(820px,100%);max-height:92vh;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 24px 70px rgba(0,0,0,.35);display:flex;flex-direction:column;}
@@ -377,18 +408,18 @@
     <a href="index.html?page=lectures">성경강의</a>
     <a href="index.html?page=sermons">설교</a>
     <a href="index.html?page=intro">소개</a>
-    <button class="icon-btn" type="button" aria-label="검색">
+    <button class="icon-btn" type="button" id="search-trigger-btn" aria-label="검색">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     </button>
     <div class="lang-select" id="lang-select">
       <button class="lang-btn" type="button" id="lang-btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
-        한국어
+        <span id="lang-btn-label">한국어</span>
       </button>
       <div class="lang-menu">
-        <a href="#">한국어</a>
-        <a href="#">English</a>
-        <a href="#">ខ្មែរ</a>
+        <a href="javascript:void(0)" data-lang="ko">한국어</a>
+        <a href="javascript:void(0)" data-lang="en">English</a>
+        <a href="javascript:void(0)" data-lang="km">ខ្មែរ</a>
       </div>
     </div>
     <a class="cta" href="index.html?page=apply">설교·강의 신청</a>
@@ -474,6 +505,30 @@
 </section>
 
 
+</div>
+
+<div class="search-overlay hidden" id="searchOverlay">
+  <div class="search-panel">
+    <div class="search-head">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5" stroke-linecap="round"></path></svg>
+      <input id="searchOverlayInput" type="search" placeholder="찾고 싶은 이야기를 검색해 보세요" aria-label="검색">
+      <button id="searchOverlayClose" type="button" aria-label="검색 닫기">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"></path></svg>
+      </button>
+    </div>
+    <div class="search-body">
+      <div class="search-summary">
+        <div>
+          <p class="search-eyebrow">Search</p>
+          <h2 id="searchResultTitle">검색어를 입력해 주세요</h2>
+          <p class="search-hint">제목 · 요약 · 태그를 자동으로 검색합니다.</p>
+        </div>
+        <span id="searchResultCount"></span>
+      </div>
+      <div class="search-grid" id="searchResults"></div>
+      <p class="search-none hidden" id="searchNoResult">검색 결과가 없습니다.</p>
+    </div>
+  </div>
 </div>
 
 <div class="article-modal hidden" id="articleModal" role="dialog" aria-modal="true">
@@ -811,6 +866,142 @@ var menuToggle = document.getElementById('menu-toggle');
     langSelect.classList.remove('open');
   });
 
+  // ===== 번역 =====
+  // TRANSLATE_WORKER_URL: 아래 안내대로 만든 번역용 Cloudflare Worker 주소로 바꿔주세요.
+  var TRANSLATE_WORKER_URL = 'https://YOUR-TRANSLATE-WORKER.workers.dev/';
+  var currentLang = 'ko';
+  var translationCache = {};
+
+  function translateTextsBatch(texts, target) {
+    var toFetch = [];
+    var result = {};
+    texts.forEach(function (t) {
+      var key = t + '|' + target;
+      if (translationCache.hasOwnProperty(key)) {
+        result[t] = translationCache[key];
+      } else if (toFetch.indexOf(t) === -1) {
+        toFetch.push(t);
+      }
+    });
+    if (toFetch.length === 0) return Promise.resolve(result);
+
+    return fetch(TRANSLATE_WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ texts: toFetch, target: target })
+    }).then(function (res) {
+      if (!res.ok) throw new Error('서버 응답 오류: HTTP ' + res.status);
+      return res.json();
+    }).then(function (data) {
+      if (!data || !Array.isArray(data.translatedTexts)) throw new Error('번역 결과 없음');
+      toFetch.forEach(function (t, i) {
+        var translated = data.translatedTexts[i];
+        if (translated) translationCache[t + '|' + target] = translated;
+        result[t] = translated;
+      });
+      return result;
+    });
+  }
+
+  function collectTextNodes(root) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        var t = node.nodeValue.trim();
+        if (!t || t.length < 2) return NodeFilter.FILTER_REJECT;
+        if (!/[가-힣]/.test(t) && !node.__originalKo) return NodeFilter.FILTER_REJECT;
+        var tag = node.parentElement ? node.parentElement.tagName : '';
+        if (tag === 'SCRIPT' || tag === 'STYLE') return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var nodes = [];
+    var n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    return nodes;
+  }
+
+  function translateSubtree(root, target) {
+    if (!root) return Promise.resolve();
+    var nodes = collectTextNodes(root);
+    var uniqueTexts = [];
+    nodes.forEach(function (n) {
+      var t = (n.__originalKo || n.nodeValue).trim();
+      if (uniqueTexts.indexOf(t) === -1) uniqueTexts.push(t);
+    });
+    if (!uniqueTexts.length) return Promise.resolve();
+
+    var chunkSize = 30, maxChunkChars = 1800;
+    var chunks = [];
+    var current = [];
+    var currentChars = 0;
+    uniqueTexts.forEach(function (t) {
+      if (current.length && (current.length >= chunkSize || currentChars + t.length > maxChunkChars)) {
+        chunks.push(current);
+        current = [];
+        currentChars = 0;
+      }
+      current.push(t);
+      currentChars += t.length;
+    });
+    if (current.length) chunks.push(current);
+
+    var translatedMap = {};
+    var chain = Promise.resolve();
+    chunks.forEach(function (chunk) {
+      chain = chain.then(function () {
+        return translateTextsBatch(chunk, target).then(function (r) {
+          for (var k in r) translatedMap[k] = r[k];
+        }).catch(function (err) {
+          console.error('[번역 실패]', err);
+        });
+      });
+    });
+
+    return chain.then(function () {
+      nodes.forEach(function (node) {
+        var original = node.__originalKo || node.nodeValue;
+        node.__originalKo = original;
+        var translated = translatedMap[original.trim()];
+        if (translated) {
+          var leading = original.match(/^\s*/)[0];
+          var trailing = original.match(/\s*$/)[0];
+          node.nodeValue = leading + translated + trailing;
+        }
+      });
+    });
+  }
+
+  function restoreOriginal(root) {
+    collectTextNodes(root).forEach(function (node) {
+      if (node.__originalKo) node.nodeValue = node.__originalKo;
+    });
+  }
+
+  function translateIfNeeded(root) {
+    if (currentLang !== 'ko') translateSubtree(root, currentLang);
+  }
+
+  function setLang(lang) {
+    currentLang = lang;
+    var label = document.getElementById('lang-btn-label');
+    if (lang === 'ko') {
+      restoreOriginal(document.body);
+      if (label) label.textContent = '한국어';
+      return;
+    }
+    var langName = lang === 'en' ? 'English' : 'ខ្មែរ';
+    if (label) label.textContent = langName + ' ...';
+    translateSubtree(document.body, lang).then(function () {
+      if (currentLang === lang && label) label.textContent = langName;
+    });
+  }
+
+  document.querySelectorAll('.lang-menu a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      setLang(a.getAttribute('data-lang'));
+    });
+  });
+
   
 function toYoutubeEmbed(url) {
     if (!url) return '';
@@ -961,6 +1152,7 @@ function toYoutubeEmbed(url) {
           '</div>';
         wrap.appendChild(a);
       });
+      translateIfNeeded(wrap);
   
       // 설교 카드는 같은 태그를 가진 글과 연결해야 하므로 writing 목록을 함께 사용
       fetch('data/sermons.json').then(function (r) { return r.json(); }).then(function (sermonItems) {
@@ -996,6 +1188,7 @@ function toYoutubeEmbed(url) {
           });
           sermonWrap.appendChild(card);
         });
+        translateIfNeeded(sermonWrap);
       });
     });
   }
@@ -1083,6 +1276,7 @@ function toYoutubeEmbed(url) {
           });
         }
       }
+      translateIfNeeded(document.getElementById('article-loaded'));
     });
   
   }
@@ -1116,6 +1310,7 @@ var lecCourses = [];
     }
     lectureVideoModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    translateIfNeeded(lectureVideoModal.querySelector('.lecture-video-box'));
   }
 
   function closeLectureVideo() {
@@ -1190,6 +1385,7 @@ var lecCourses = [];
       });
       listEl.appendChild(card);
     });
+    translateIfNeeded(listEl);
   }
 
   }
@@ -1263,6 +1459,7 @@ var lecCourses = [];
     requestAnimationFrame(function () {
       observeReveals(document.getElementById(viewId));
     });
+    translateIfNeeded(document.getElementById(viewId));
   }
 
   // ===== 글 모달 (article modal) =====
@@ -1365,6 +1562,7 @@ var lecCourses = [];
         });
         listEl.appendChild(card);
       });
+      translateIfNeeded(listEl);
 
       if (autoOpenId) {
         var target = items.filter(function (s) { return s.id === autoOpenId; })[0];
@@ -1400,8 +1598,161 @@ var lecCourses = [];
           '</div>';
         wrap.appendChild(a);
       });
+      translateIfNeeded(wrap);
     });
   }
+
+  // ===== 검색 =====
+  function normalizeSearchText(text) {
+    return String(text || '')
+      .toLowerCase()
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/[""'']/g, '')
+      .replace(/[.,!?;:()[\]{}"'`~·|/\\]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  var searchIndexPromise = null;
+  function buildSearchIndex() {
+    if (searchIndexPromise) return searchIndexPromise;
+    searchIndexPromise = Promise.all([
+      fetch('data/writing.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
+      fetch('data/sermons.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
+      fetch('data/lectures.json').then(function (r) { return r.json(); }).catch(function () { return []; })
+    ]).then(function (results) {
+      var writing = results[0], sermons = results[1], lecturesRaw = results[2];
+      var items = [];
+      writing.forEach(function (w) {
+        items.push({
+          type: 'writing', id: w.id, title: w.title, summary: w.summary || '',
+          category: [w.mainCategory, w.subCategory].filter(Boolean).join(' · '),
+          tags: w.tags || [], thumbnail: w.thumbnail || '', video: null
+        });
+      });
+      sermons.forEach(function (s) {
+        items.push({
+          type: 'sermon', id: s.id, title: s.title, summary: s.summary || '',
+          category: [s.mainCategory, s.subCategory].filter(Boolean).join(' · '),
+          tags: s.tags || [], thumbnail: '', video: s.video || null
+        });
+      });
+      (lecturesRaw || []).forEach(function (course) {
+        (course.weeks || []).forEach(function (w) {
+          items.push({
+            type: 'lecture', id: w.id, title: w.title, summary: w.summary || '',
+            category: w.subCategory || course.title, tags: w.tags || [], thumbnail: '', video: w.video || null
+          });
+        });
+      });
+      return items;
+    });
+    return searchIndexPromise;
+  }
+
+  function searchItems(items, query) {
+    var q = normalizeSearchText(query);
+    if (!q) return [];
+    var terms = q.split(' ').filter(Boolean);
+    return items.map(function (item) {
+      var fields = {
+        title: normalizeSearchText(item.title),
+        summary: normalizeSearchText(item.summary),
+        category: normalizeSearchText(item.category),
+        tags: normalizeSearchText((item.tags || []).join(' '))
+      };
+      var matchesAll = terms.every(function (term) {
+        return fields.title.indexOf(term) !== -1 || fields.summary.indexOf(term) !== -1 ||
+               fields.category.indexOf(term) !== -1 || fields.tags.indexOf(term) !== -1;
+      });
+      if (!matchesAll) return { item: item, score: 0 };
+      var score = 0;
+      terms.forEach(function (term) {
+        if (fields.title.indexOf(term) !== -1) score += 100;
+        if (fields.tags.indexOf(term) !== -1) score += 70;
+        if (fields.category.indexOf(term) !== -1) score += 50;
+        if (fields.summary.indexOf(term) !== -1) score += 20;
+      });
+      if (fields.title === q) score += 200;
+      else if (fields.title.indexOf(q) !== -1) score += 120;
+      return { item: item, score: score };
+    }).filter(function (r) { return r.score > 0; })
+      .sort(function (a, b) { return b.score - a.score; })
+      .map(function (r) { return r.item; });
+  }
+
+  var searchOverlay = document.getElementById('searchOverlay');
+  var searchOverlayInput = document.getElementById('searchOverlayInput');
+
+  function openSearchOverlay() {
+    searchOverlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    searchOverlayInput.value = '';
+    renderSearchResults('');
+    requestAnimationFrame(function () { searchOverlayInput.focus(); });
+    buildSearchIndex();
+    translateIfNeeded(document.getElementById('searchOverlay'));
+  }
+
+  function closeSearchOverlay() {
+    searchOverlay.classList.add('hidden');
+    if (articleModal.classList.contains('hidden') && lectureVideoModal.classList.contains('hidden')) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  function renderSearchResults(query) {
+    var grid = document.getElementById('searchResults');
+    var titleEl = document.getElementById('searchResultTitle');
+    var count = document.getElementById('searchResultCount');
+    var none = document.getElementById('searchNoResult');
+    grid.innerHTML = '';
+    var q = String(query || '').trim();
+    if (!q) {
+      titleEl.textContent = '검색어를 입력해 주세요';
+      count.textContent = '';
+      none.classList.add('hidden');
+      return;
+    }
+    buildSearchIndex().then(function (items) {
+      var results = searchItems(items, q);
+      titleEl.textContent = '"' + q + '"';
+      count.textContent = results.length + '개 결과';
+      none.classList.toggle('hidden', results.length > 0);
+      results.forEach(function (r) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'search-card';
+        var videoId = getYoutubeId(r.video);
+        var thumbSrc = r.thumbnail || (videoId ? 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg' : '');
+        btn.innerHTML =
+          '<div class="thumb">' + (thumbSrc ? '<img src="' + thumbSrc + '" loading="lazy" alt="' + escapeHtml(r.title) + '">' : '') + '</div>' +
+          '<div class="body">' +
+            '<span class="cat">' + escapeHtml(r.category) + '</span>' +
+            '<span class="title">' + escapeHtml(r.title) + '</span>' +
+            (r.summary ? '<span class="summary">' + escapeHtml(r.summary) + '</span>' : '') +
+          '</div>';
+        btn.addEventListener('click', function () {
+          closeSearchOverlay();
+          if (r.video) {
+            openLectureVideo(r.video, r.title);
+          } else {
+            openArticleModal(r.id);
+          }
+        });
+        grid.appendChild(btn);
+      });
+      translateIfNeeded(grid);
+    });
+  }
+
+  document.getElementById('search-trigger-btn').addEventListener('click', openSearchOverlay);
+  document.getElementById('searchOverlayClose').addEventListener('click', closeSearchOverlay);
+  searchOverlayInput.addEventListener('input', function (e) { renderSearchResults(e.target.value); });
+  searchOverlay.addEventListener('click', function (e) { if (e.target === searchOverlay) closeSearchOverlay(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !searchOverlay.classList.contains('hidden')) closeSearchOverlay();
+  });
 
   if (routePage === 'lectures') {
     showView('view-lectures');
