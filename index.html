@@ -120,6 +120,11 @@
 .hero p.lede{margin:0;font-size:18px;font-weight:700;color:#FDBA74;letter-spacing:.3px;}
   .hero h1{margin:0;font-size:clamp(28px,3.4vw,42px);line-height:1.4;font-weight:900;max-width:1080px;color:#fff;}
   .hero p.sub{margin:0;font-size:18px;color:rgba(255,255,255,.85);max-width:600px;}
+  @media (min-width:900px){
+    .hero p.lede{font-size:21px;}
+    .hero h1{font-size:clamp(40px,3.6vw,58px);}
+    .hero p.sub{font-size:21px;}
+  }
   .btn-row{display:flex;gap:14px;margin-top:6px;flex-wrap:wrap;justify-content:center;}
   .btn{padding:13px 28px;border-radius:4px;font-weight:700;font-size:15px;}
   .btn-solid{background:var(--brown);color:var(--cream);}
