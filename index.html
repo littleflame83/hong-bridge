@@ -120,6 +120,12 @@
 .hero p.lede{margin:0;font-size:18px;font-weight:700;color:#FDBA74;letter-spacing:.3px;}
   .hero h1{margin:0;font-size:clamp(28px,3.4vw,42px);line-height:1.4;font-weight:900;max-width:1080px;color:#fff;}
   .hero p.sub{margin:0;font-size:18px;color:rgba(255,255,255,.85);max-width:600px;}
+  .hero-intro-link{margin-top:6px;color:rgba(255,255,255,.9);font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(255,255,255,.4);}
+  .hero-intro-link:hover{color:#fff;text-decoration-color:rgba(255,255,255,.9);}
+  .hero-scroll{position:absolute;left:0;right:0;bottom:22px;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.8);text-decoration:none;}
+  .hero-scroll span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+  .bob{animation:bob 2.2s ease-in-out infinite;}
   @media (min-width:900px){
     .hero p.lede{font-size:21px;}
     .hero h1{font-size:clamp(40px,3.6vw,58px);}
@@ -394,6 +400,11 @@
   <p class="lede">신학과 목회를 잇는 이야기</p>
   <h1>성경을 읽고 신학을 공부하며 설교를 생각합니다</h1>
   <p class="sub">이곳은 고민의 결과가 모인 곳입니다</p>
+  <a class="hero-intro-link" href="index.html?page=intro">Hong-Bridge 소개 →</a>
+  <a class="hero-scroll bob" href="javascript:void(0)" aria-label="아래로 스크롤" onclick="document.getElementById('writing').scrollIntoView({behavior:'smooth'})">
+    <span>Scroll</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m0 0l-6-6m6 6l6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </a>
 </section>
 
 <!-- ===== 글 ===== -->
