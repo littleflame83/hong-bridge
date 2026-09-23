@@ -10,8 +10,118 @@
         "title": "우리말 성경의 역사",
         "subCategory": "성경일독학교 (구약) 1강",
         "summary": "대한성서공회 내용을 참조하였습니다",
-        "tags": ["성경일독학교"],
+        "tags": [
+          "성경일독학교"
+        ],
         "video": "https://youtu.be/hhYBkG1C8u4",
+        "body": ""
+      },
+      {
+        "week": 2,
+        "id": "ot-week-2",
+        "title": "인류의 역사",
+        "subCategory": "성경일독학교 (구약) 2강",
+        "summary": "창세기 1~11장까지 내용을 다룹니다",
+        "tags": [
+          "성경일독학교"
+        ],
+        "video": "https://youtu.be/qa67H1TuWSU",
+        "body": ""
+      },
+      {
+        "week": 3,
+        "id": "ot-week-3",
+        "title": "모세오경",
+        "subCategory": "성경일독학교 (구약) 3강",
+        "summary": "창세기 12장부터 레위기까지입니다",
+        "tags": [
+          "성경일독학교"
+        ],
+        "video": "https://youtu.be/kaA_56KRSzQ",
+        "body": ""
+      },
+      {
+        "week": 4,
+        "id": "ot-week-4",
+        "title": "역사서",
+        "subCategory": "성경일독학교 (구약) 4강",
+        "summary": "여호수아부터 열왕기하까지입니다",
+        "tags": [
+          "성경일독학교"
+        ],
+        "video": "https://youtu.be/nszkf3AYR8c",
+        "body": ""
+      },
+      {
+        "week": 5,
+        "id": "ot-week-5",
+        "title": "위대한 바빌론",
+        "subCategory": "성경일독학교 (구약) 5강",
+        "summary": "바벨론이 얼마나 대단한 나라인지 알수록 그 나라를 장기말처럼 사용하시는 주님의 위대하심을 고백하게 됩니다",
+        "tags": [
+          "성경일독학교"
+        ],
+        "video": "https://youtu.be/VdTE_7viPSc?si=jmmnCoFKOqE3jsee",
+        "body": ""
+      },
+      {
+        "week": 6,
+        "id": "ot-week-6",
+        "title": "창세기",
+        "subCategory": "성경일독학교 (구약) 6강",
+        "summary": "바벨론 포로기 이후 관점에서 보면 창세기의 내용이 어마어마해집니다",
+        "tags": [
+          "성경일독학교"
+        ],
+        "video": "https://youtu.be/KdJa4Z83t38",
+        "body": ""
+      },
+      {
+        "week": 7,
+        "id": "ot-week-7",
+        "title": "역대기",
+        "subCategory": "성경일독학교 (구약) 7강",
+        "summary": "열왕기와 역대기의 차이를 알아야 성경이 더 잘 읽혀집니다",
+        "tags": [
+          "성경일독학교"
+        ],
+        "video": "https://youtu.be/RUiq7wlwhgI",
+        "body": ""
+      },
+      {
+        "week": 8,
+        "id": "ot-week-8",
+        "title": "에스라/느헤미야",
+        "subCategory": "성경일독학교 (구약) 8강",
+        "summary": "포로기를 끝낸 유다의 이야기를 살펴봅니다",
+        "tags": [
+          "성경일독학교"
+        ],
+        "video": "https://youtu.be/6F11eagrWBw",
+        "body": ""
+      },
+      {
+        "week": 9,
+        "id": "ot-week-9",
+        "title": "욥기",
+        "subCategory": "성경일독학교 (구약) 9강",
+        "summary": "욥의 주제는 뭘까요? 오해가 많은 욥의 이야기를 바로 읽어봅시다",
+        "tags": [
+          "성경일독학교"
+        ],
+        "video": "https://youtu.be/K9rxzBJWTIQ",
+        "body": ""
+      },
+      {
+        "week": 10,
+        "id": "ot-week-10",
+        "title": "인식의 확산",
+        "subCategory": "성경일독학교 (구약) 10강",
+        "summary": "구약은 왜 기록되었을까요? 그 의도에 대해 생각해봅니다",
+        "tags": [
+          "성경일독학교"
+        ],
+        "video": "https://youtu.be/ov5gbGZPqWE",
         "body": ""
       }
     ]
