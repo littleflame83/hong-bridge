@@ -884,6 +884,14 @@ var menuToggle = document.getElementById('menu-toggle');
   var currentLang = 'ko';
   var translationCache = {};
 
+  var NAME_MAP = [
+    [/홍성화/g, 'Hong Sung Hwa']
+  ];
+  function applyNameMap(text) {
+    NAME_MAP.forEach(function (pair) { text = text.replace(pair[0], pair[1]); });
+    return text;
+  }
+
   function translateTextsBatch(texts, target) {
     var toFetch = [];
     var result = {};
@@ -897,10 +905,12 @@ var menuToggle = document.getElementById('menu-toggle');
     });
     if (toFetch.length === 0) return Promise.resolve(result);
 
+    var preparedTexts = toFetch.map(applyNameMap);
+
     return fetch(TRANSLATE_WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ texts: toFetch, target: target })
+      body: JSON.stringify({ texts: preparedTexts, target: target })
     }).then(function (res) {
       if (!res.ok) throw new Error('서버 응답 오류: HTTP ' + res.status);
       return res.json();
@@ -919,7 +929,7 @@ var menuToggle = document.getElementById('menu-toggle');
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (node) {
         var t = node.nodeValue.trim();
-        if (!t || t.length < 2) return NodeFilter.FILTER_REJECT;
+        if (!t) return NodeFilter.FILTER_REJECT;
         if (!/[가-힣]/.test(t) && !node.__originalKo) return NodeFilter.FILTER_REJECT;
         var tag = node.parentElement ? node.parentElement.tagName : '';
         if (tag === 'SCRIPT' || tag === 'STYLE') return NodeFilter.FILTER_REJECT;
@@ -987,14 +997,19 @@ var menuToggle = document.getElementById('menu-toggle');
     });
   }
 
+  var translateDebounceTimer = null;
   function translateIfNeeded(root) {
-    if (currentLang !== 'ko') translateSubtree(root, currentLang);
+    if (currentLang === 'ko') return;
+    if (translateDebounceTimer) clearTimeout(translateDebounceTimer);
+    translateDebounceTimer = setTimeout(function () {
+      translateSubtree(document.body, currentLang);
+    }, 60);
   }
 
   var LANG_NAMES = {
-    ko: { ko: '한국어', en: 'English', km: 'ខ្មែរ' },
+    ko: { ko: '한국어', en: '영어', km: '크메르어' },
     en: { ko: 'Korean', en: 'English', km: 'Khmer' },
-    km: { ko: 'កូរ៉េ', en: 'អង់គ្លេស', km: 'ខ្មែរ' }
+    km: { ko: 'ភាសាកូរ៉េ', en: 'ភាសាអង់គ្លេស', km: 'ភាសាខ្មែរ' }
   };
 
   function applyLangLabels(lang) {
@@ -1386,6 +1401,7 @@ var lecCourses = [];
       });
       wrap.appendChild(btn);
     });
+    translateIfNeeded(wrap);
   }
 
   function renderCourse() {
@@ -1418,6 +1434,7 @@ var lecCourses = [];
       });
       listEl.appendChild(card);
     });
+    translateIfNeeded(document.getElementById('course-summary'));
     translateIfNeeded(listEl);
   }
 
