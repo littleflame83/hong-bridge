@@ -424,13 +424,12 @@
     </div>
     <div class="lang-select" id="lang-select">
       <button class="lang-btn" type="button" id="lang-btn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
-        <span id="lang-btn-label">한국어</span>
+        🌐 <span id="lang-btn-label">한국어</span>
       </button>
       <div class="lang-menu">
-        <a href="javascript:void(0)" data-lang="ko">한국어</a>
-        <a href="javascript:void(0)" data-lang="en">English</a>
-        <a href="javascript:void(0)" data-lang="km">ខ្មែរ</a>
+        <a href="javascript:void(0)" data-lang="ko">🇰🇷 <span class="lang-item-label" data-key="ko">한국어</span></a>
+        <a href="javascript:void(0)" data-lang="en">🇺🇸 <span class="lang-item-label" data-key="en">English</span></a>
+        <a href="javascript:void(0)" data-lang="km">🇰🇭 <span class="lang-item-label" data-key="km">ខ្មែរ</span></a>
       </div>
     </div>
     <button class="menu-toggle" type="button" id="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="main-nav">
@@ -959,16 +958,14 @@ var menuToggle = document.getElementById('menu-toggle');
     if (current.length) chunks.push(current);
 
     var translatedMap = {};
-    var chain = Promise.resolve();
-    chunks.forEach(function (chunk) {
-      chain = chain.then(function () {
-        return translateTextsBatch(chunk, target).then(function (r) {
-          for (var k in r) translatedMap[k] = r[k];
-        }).catch(function (err) {
-          console.error('[번역 실패]', err);
-        });
+    var chunkPromises = chunks.map(function (chunk) {
+      return translateTextsBatch(chunk, target).then(function (r) {
+        for (var k in r) translatedMap[k] = r[k];
+      }).catch(function (err) {
+        console.error('[번역 실패]', err);
       });
     });
+    var chain = Promise.all(chunkPromises);
 
     return chain.then(function () {
       nodes.forEach(function (node) {
@@ -994,20 +991,42 @@ var menuToggle = document.getElementById('menu-toggle');
     if (currentLang !== 'ko') translateSubtree(root, currentLang);
   }
 
+  var LANG_NAMES = {
+    ko: { ko: '한국어', en: 'English', km: 'ខ្មែរ' },
+    en: { ko: 'Korean', en: 'English', km: 'Khmer' },
+    km: { ko: 'កូរ៉េ', en: 'អង់គ្លេស', km: 'ខ្មែរ' }
+  };
+
+  function applyLangLabels(lang) {
+    var names = LANG_NAMES[lang] || LANG_NAMES.ko;
+    document.querySelectorAll('.lang-item-label').forEach(function (el) {
+      var key = el.getAttribute('data-key');
+      if (names[key]) el.textContent = names[key];
+    });
+  }
+
   function setLang(lang) {
     currentLang = lang;
+    try { localStorage.setItem('hb-lang', lang); } catch (e) {}
+    applyLangLabels(lang);
     var label = document.getElementById('lang-btn-label');
     if (lang === 'ko') {
       restoreOriginal(document.body);
       if (label) label.textContent = '한국어';
       return;
     }
-    var langName = lang === 'en' ? 'English' : 'ខ្មែរ';
+    var langName = LANG_NAMES[lang][lang];
     if (label) label.textContent = langName + ' ...';
     translateSubtree(document.body, lang).then(function () {
       if (currentLang === lang && label) label.textContent = langName;
     });
   }
+
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('hb-lang'); } catch (e) {}
+    if (saved) applyLangLabels(saved);
+  })();
 
   document.querySelectorAll('.lang-menu a').forEach(function (a) {
     a.addEventListener('click', function () {
@@ -1124,6 +1143,7 @@ function toYoutubeEmbed(url) {
   }
 
   function renderAttachments(container, attachments) {
+    container.querySelectorAll('.attachment-row').forEach(function (el) { el.remove(); });
     if (!attachments || !attachments.length) return;
     container.style.display = 'block';
     attachments.forEach(function (a) {
@@ -1794,6 +1814,12 @@ var lecCourses = [];
   if (routeId) {
     openArticleModal(routeId, false);
   }
+
+  (function () {
+    var savedLang = null;
+    try { savedLang = localStorage.getItem('hb-lang'); } catch (e) {}
+    if (savedLang && savedLang !== 'ko') setLang(savedLang);
+  })();
 </script>
 
 </body>
