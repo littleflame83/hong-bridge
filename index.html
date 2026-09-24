@@ -283,6 +283,12 @@
 .article-modal.hidden{display:none;}
 .article-modal-box{background:var(--cream);width:min(820px,100%);max-height:92vh;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 24px 70px rgba(0,0,0,.35);display:flex;flex-direction:column;}
 .article-modal-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border:0;border-radius:50%;background:var(--cream-deep);color:var(--ink);font-size:22px;line-height:1;cursor:pointer;z-index:2;}
+.share-btn{position:absolute;top:14px;right:60px;width:36px;height:36px;border:0;border-radius:50%;background:var(--cream-deep);color:var(--ink);cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;transition:background-color .15s ease;}
+.share-btn:hover{background:var(--tag-bg);color:var(--brown-dark);}
+.page-share-btn{position:static;display:inline-flex;margin-left:10px;}
+.page-head-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+#shareToast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;font-size:13.5px;font-weight:600;padding:10px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:2000;}
+#shareToast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .article-modal-scroll{overflow-y:auto;}
 .article-wrap{max-width:100%;margin:0 auto;padding:56px 28px 40px;}
 @media (max-width:640px){
@@ -556,6 +562,9 @@
 
 <div class="article-modal hidden" id="articleModal" role="dialog" aria-modal="true">
   <div class="article-modal-box">
+    <button class="share-btn" id="articleShareBtn" data-share-title-el="a-title" aria-label="공유하기" type="button">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+    </button>
     <button class="article-modal-close" id="articleModalClose" aria-label="닫기" type="button">×</button>
     <div class="article-modal-scroll">
       <main id="article-root">
@@ -600,7 +609,12 @@
 <div id="view-lectures" style="display:none;">
 <main>
   <div class="lec-wrap">
-    <h1>성경 강의</h1>
+    <div class="page-head-row">
+      <h1 id="lectures-h1">성경 강의</h1>
+      <button class="page-share-btn share-btn" type="button" aria-label="공유하기" data-share-title-el="lectures-h1">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+      </button>
+    </div>
     <p class="lec-intro">제가 사역했던 대구신광교회에서 구약, 신약 각 10주에 걸쳐 강의했던 내용입니다</p>
 
     <div class="course-tabs" id="course-tabs"></div>
@@ -612,7 +626,10 @@
 
 <div id="view-intro" style="display:none;">
 <main>
-  <div class="about-wrap" style="max-width:760px;margin:0 auto;padding:64px 24px 80px;">
+  <div class="about-wrap" style="max-width:760px;margin:0 auto;padding:64px 24px 80px;position:relative;">
+  <button class="page-share-btn share-btn" type="button" aria-label="공유하기" style="position:absolute;top:20px;right:20px;" data-share-title-el="intro-title-anchor">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+  </button>
 <div class="reveal mb-10 sm:mb-14" style="display:flex;align-items:stretch;gap:20px;flex-wrap:wrap;">
   <div style="flex:1;min-width:200px;text-align:left;display:flex;flex-direction:column;justify-content:center;">
     <p class="text-ember text-xs font-bold tracking-[0.25em] uppercase mb-3">My Story</p>
@@ -794,7 +811,12 @@
 <div id="view-sermons" style="display:none;">
 <main>
   <div class="lec-wrap">
-    <h1>설교</h1>
+    <div class="page-head-row">
+      <h1 id="sermons-h1">설교</h1>
+      <button class="page-share-btn share-btn" type="button" aria-label="공유하기" data-share-title-el="sermons-h1">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+      </button>
+    </div>
     <p class="lec-intro">본문을 따라간 설교를 영상으로 만나보실 수 있습니다.</p>
     <div class="week-grid" id="sermon-list"></div>
   </div>
@@ -804,7 +826,12 @@
 <div id="view-writing" style="display:none;">
 <main>
   <div class="lec-wrap">
-    <h1>글</h1>
+    <div class="page-head-row">
+      <h1 id="writing-h1">글</h1>
+      <button class="page-share-btn share-btn" type="button" aria-label="공유하기" data-share-title-el="writing-h1">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+      </button>
+    </div>
     <p class="lec-intro">성경을 읽고 신학을 공부하며 정리한 글입니다.</p>
     <div class="grid2 writing-list-grid" id="writing-list-grid"></div>
   </div>
@@ -816,7 +843,12 @@
   <div class="lecture-video-box">
     <div class="lecture-video-head">
       <div class="lecture-video-title" id="lectureVideoTitle"></div>
-      <button class="lecture-video-close" type="button" id="lectureVideoClose" aria-label="닫기">×</button>
+      <div style="display:flex;align-items:center;gap:8px;flex:0 0 auto;">
+        <button class="lecture-video-close" type="button" id="lectureVideoShareBtn" aria-label="공유하기" style="font-size:0;display:flex;align-items:center;justify-content:center;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+        </button>
+        <button class="lecture-video-close" type="button" id="lectureVideoClose" aria-label="닫기">×</button>
+      </div>
     </div>
     <div class="lecture-video-frame-wrap">
       <iframe class="lecture-video-frame" id="lectureVideoFrame" src="" title="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -858,6 +890,8 @@
   </div>
   <div class="copyright">© 2026 HONG-BRIDGE. All rights reserved.</div>
 </footer>
+
+<div id="shareToast"></div>
 
 <script>
 if ('scrollRestoration' in history) {
@@ -1286,7 +1320,7 @@ function toYoutubeEmbed(url) {
             (s.summary ? '<span class="week-summary">' + escapeHtml(s.summary) + '</span>' : '') +
             '</div>';
           card.addEventListener('click', function () {
-            openLectureVideo(s.video, s.title, relatedId);
+            openLectureVideo(s.video, s.title, relatedId, 'page=sermons&video=' + encodeURIComponent(s.id));
           });
           sermonWrap.appendChild(card);
         });
@@ -1398,7 +1432,7 @@ var lecCourses = [];
   var lectureVideoTitle = document.getElementById('lectureVideoTitle');
   var lectureVideoRelated = document.getElementById('lectureVideoRelated');
 
-  function openLectureVideo(videoUrl, title, relatedArticleId) {
+  function openLectureVideo(videoUrl, title, relatedArticleId, shareQuery) {
     var videoId = getYoutubeId(videoUrl);
     if (!videoId) return;
     lectureVideoTitle.textContent = title || '';
@@ -1414,15 +1448,26 @@ var lecCourses = [];
     lectureVideoModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     translateIfNeeded(lectureVideoModal.querySelector('.lecture-video-box'));
+    if (shareQuery) {
+      history.pushState({}, '', 'index.html?' + shareQuery);
+    }
   }
 
-  function closeLectureVideo() {
+  function closeLectureVideo(skipUrlChange) {
     lectureVideoModal.classList.add('hidden');
     lectureVideoFrame.src = '';
     document.body.style.overflow = '';
+    if (!skipUrlChange) {
+      var url = new URL(window.location.href);
+      url.searchParams.delete('video');
+      history.pushState({}, '', url.toString());
+    }
   }
 
-  document.getElementById('lectureVideoClose').addEventListener('click', closeLectureVideo);
+  document.getElementById('lectureVideoClose').addEventListener('click', function () { closeLectureVideo(); });
+  document.getElementById('lectureVideoShareBtn').addEventListener('click', function () {
+    shareContent(window.location.href, lectureVideoTitle.textContent, lectureVideoTitle.textContent);
+  });
   lectureVideoModal.addEventListener('click', function (e) {
     if (e.target === lectureVideoModal) closeLectureVideo();
   });
@@ -1431,7 +1476,7 @@ var lecCourses = [];
   });
 
 
-  function initLectures(courseParam) {
+  function initLectures(courseParam, autoOpenVideoId) {
   fetch('data/lectures.json').then(function (r) { return r.json(); }).then(function (data) {
     lecCourses = data;
     if (courseParam === 'ot') lecActiveCourseId = 'ot-10weeks';
@@ -1440,6 +1485,14 @@ var lecCourses = [];
 
     renderTabs();
     renderCourse();
+
+    if (autoOpenVideoId) {
+      var course = lecCourses.filter(function (c) { return c.id === lecActiveCourseId; })[0];
+      var target = course && (course.weeks || []).filter(function (w) { return w.id === autoOpenVideoId; })[0];
+      if (target && target.video) {
+        openLectureVideo(target.video, (target.week + '강 · ' + target.title));
+      }
+    }
   });
 
   function renderTabs() {
@@ -1485,7 +1538,10 @@ var lecCourses = [];
           (w.summary ? '<span class="week-summary">' + escapeHtml(w.summary) + '</span>' : '') +
         '</div>';
       card.addEventListener('click', function () {
-        if (w.video) openLectureVideo(w.video, (w.week + '강 · ' + w.title));
+        if (w.video) {
+          var courseCode = lecActiveCourseId.indexOf('ot') === 0 ? 'ot' : 'nt';
+          openLectureVideo(w.video, (w.week + '강 · ' + w.title), null, 'page=lectures&course=' + courseCode + '&video=' + encodeURIComponent(w.id));
+        }
       });
       listEl.appendChild(card);
     });
@@ -1566,6 +1622,43 @@ var lecCourses = [];
   // ===== 글 모달 (article modal) =====
   var articleModal = document.getElementById('articleModal');
 
+  // ===== 공유 =====
+  var shareToastTimer = null;
+  function showShareToast(msg) {
+    var toast = document.getElementById('shareToast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    if (shareToastTimer) clearTimeout(shareToastTimer);
+    shareToastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200);
+  }
+
+  function shareContent(url, title, text) {
+    if (navigator.share) {
+      navigator.share({ title: title || '', text: text || '', url: url }).catch(function () {});
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () {
+        showShareToast('링크가 복사되었습니다');
+      }).catch(function () {
+        window.prompt('아래 링크를 복사하세요', url);
+      });
+    } else {
+      window.prompt('아래 링크를 복사하세요', url);
+    }
+  }
+
+  function shareIconSvg() {
+    return '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>';
+  }
+
+  document.querySelectorAll('.share-btn').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var titleEl = btn.getAttribute('data-share-title-el');
+      var title = titleEl ? (document.getElementById(titleEl) || {}).textContent : document.title;
+      shareContent(window.location.href, title, title);
+    });
+  });
+
   function openArticleModal(id, pushUrl) {
     initArticle(id);
     articleModal.classList.remove('hidden');
@@ -1605,7 +1698,7 @@ var lecCourses = [];
     e.preventDefault();
     var url = new URL(a.href, window.location.href);
     var id = url.searchParams.get('id');
-    if (!lectureVideoModal.classList.contains('hidden')) closeLectureVideo();
+    if (!lectureVideoModal.classList.contains('hidden')) closeLectureVideo(true);
     openArticleModal(id);
   });
 
@@ -1647,7 +1740,7 @@ var lecCourses = [];
           '</div>';
         card.addEventListener('click', function () {
           if (s.video) {
-            openLectureVideo(s.video, s.title, findRelatedWritingId(s, writingItems));
+            openLectureVideo(s.video, s.title, findRelatedWritingId(s, writingItems), 'page=sermons&video=' + encodeURIComponent(s.id));
           } else {
             openArticleModal(s.id);
           }
@@ -1733,7 +1826,8 @@ var lecCourses = [];
         (course.weeks || []).forEach(function (w) {
           items.push({
             type: 'lecture', id: w.id, title: w.title, summary: w.summary || '',
-            category: w.subCategory || course.title, tags: w.tags || [], thumbnail: '', video: w.video || null
+            category: w.subCategory || course.title, tags: w.tags || [], thumbnail: '', video: w.video || null,
+            course: course.id.indexOf('ot') === 0 ? 'ot' : 'nt'
           });
         });
       });
@@ -1827,7 +1921,10 @@ var lecCourses = [];
         btn.addEventListener('click', function () {
           closeSearchOverlay();
           if (r.video) {
-            openLectureVideo(r.video, r.title);
+            var shareQ = r.type === 'lecture'
+              ? 'page=lectures&course=' + r.course + '&video=' + encodeURIComponent(r.id)
+              : 'page=sermons&video=' + encodeURIComponent(r.id);
+            openLectureVideo(r.video, r.title, null, shareQ);
           } else {
             openArticleModal(r.id);
           }
@@ -1858,7 +1955,7 @@ var lecCourses = [];
 
     if (page === 'lectures') {
       showView('view-lectures');
-      initLectures(params.get('course'));
+      initLectures(params.get('course'), params.get('video'));
     } else if (page === 'sermons') {
       showView('view-sermons');
       initSermonsPage(params.get('video'));
