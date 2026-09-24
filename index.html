@@ -1028,11 +1028,11 @@ var menuToggle = document.getElementById('menu-toggle');
     if (lang === 'ko') {
       restoreOriginal(document.body);
       if (label) label.textContent = '한국어';
-      return;
+      return Promise.resolve();
     }
     var langName = LANG_NAMES[lang][lang];
     if (label) label.textContent = langName + ' ...';
-    translateSubtree(document.body, lang).then(function () {
+    return translateSubtree(document.body, lang).then(function () {
       if (currentLang === lang && label) label.textContent = langName;
     });
   }
@@ -1483,10 +1483,6 @@ var lecCourses = [];
     });
   }
 
-  var routeParams = new URLSearchParams(window.location.search);
-  var routeId = routeParams.get('id');
-  var routePage = routeParams.get('page');
-
   var revealObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
@@ -1545,15 +1541,6 @@ var lecCourses = [];
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !articleModal.classList.contains('hidden')) closeArticleModal();
-  });
-  window.addEventListener('popstate', function () {
-    var p = new URLSearchParams(window.location.search);
-    var id = p.get('id');
-    if (id) {
-      openArticleModal(id, false);
-    } else {
-      closeArticleModal(false);
-    }
   });
 
   // 사이트 어디서든 "index.html?id=..." 링크는 새 페이지로 이동하지 않고 글 모달로 엽니다.
@@ -1810,27 +1797,63 @@ var lecCourses = [];
     if (e.key === 'Escape' && !searchOverlay.classList.contains('hidden')) closeSearchOverlay();
   });
 
-  if (routePage === 'lectures') {
-    showView('view-lectures');
-    initLectures(routeParams.get('course'));
-  } else if (routePage === 'sermons') {
-    showView('view-sermons');
-    initSermonsPage(routeParams.get('video'));
-  } else if (routePage === 'writing') {
-    showView('view-writing');
-    initWritingListPage();
-  } else if (routePage === 'intro') {
-    showView('view-intro');
-  } else if (routePage === 'apply') {
-    showView('view-apply');
-  } else {
-    showView('view-home');
-    initHome();
+  function route() {
+    var params = new URLSearchParams(window.location.search);
+    var page = params.get('page');
+
+    if (page === 'lectures') {
+      showView('view-lectures');
+      initLectures(params.get('course'));
+    } else if (page === 'sermons') {
+      showView('view-sermons');
+      initSermonsPage(params.get('video'));
+    } else if (page === 'writing') {
+      showView('view-writing');
+      initWritingListPage();
+    } else if (page === 'intro') {
+      showView('view-intro');
+    } else if (page === 'apply') {
+      showView('view-apply');
+    } else {
+      showView('view-home');
+      initHome();
+    }
   }
 
-  if (routeId) {
-    openArticleModal(routeId, false);
+  function syncArticleModal() {
+    var id = new URLSearchParams(window.location.search).get('id');
+    if (id) {
+      openArticleModal(id, false);
+    } else if (!articleModal.classList.contains('hidden')) {
+      closeArticleModal(false);
+    }
   }
+
+  // 사이트 안의 다른 메뉴/링크를 눌러도 새로고침 없이 화면만 바뀌도록 가로챕니다.
+  // (index.html?id=... 링크는 위쪽에서 이미 별도로 글 모달로 처리합니다)
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href]');
+    if (!a) return;
+    if (a.hasAttribute('download') || a.target === '_blank') return;
+    var href = a.getAttribute('href');
+    if (!href || href.indexOf('index.html') !== 0) return;
+    if (href.indexOf('index.html?id=') === 0) return; // 글 모달용 링크는 별도 처리
+
+    e.preventDefault();
+    var url = new URL(href, window.location.href);
+    if (window.location.pathname + window.location.search === url.pathname + url.search) return;
+    history.pushState({}, '', url.toString());
+    window.scrollTo(0, 0);
+    route();
+  });
+
+  window.addEventListener('popstate', function () {
+    route();
+    syncArticleModal();
+  });
+
+  route();
+  syncArticleModal();
 
   (function () {
     var savedLang = null;
