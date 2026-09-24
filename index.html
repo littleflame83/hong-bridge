@@ -300,6 +300,17 @@
   .article-body p{margin:0 0 18px;}
   .article-body img{max-width:100%;border-radius:6px;}
   .article-h3{font-size:19px;font-weight:700;margin:28px 0 14px;color:var(--ink);}
+  .story-section-toggle{cursor:pointer;display:inline-block;position:relative;padding-right:24px;text-decoration:underline;text-decoration-style:dashed;text-decoration-color:rgba(217,119,6,.55);text-underline-offset:4px;transition:opacity .15s ease;}
+  .story-section-toggle:hover{opacity:.75;}
+  .story-section-chevron{position:absolute;right:0;top:50%;display:inline-flex;transform:translateY(-50%) rotate(0deg);transition:transform .25s ease;}
+  .story-section-toggle[aria-expanded="true"] .story-section-chevron{transform:translateY(-50%) rotate(90deg);}
+  .story-section-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease;}
+  .story-section-body.is-open{grid-template-rows:1fr;}
+  .story-section-inner{overflow:hidden;min-height:0;}
+  @media print{
+    .story-section-body{display:block !important;}
+    .story-section-chevron{display:none !important;}
+  }
   .scripture-quote{margin:0 0 14px;padding:10px 16px;background:var(--cream-deep);border-left:4px solid var(--brown);border-radius:0 6px 6px 0;font-style:italic;font-size:14px;line-height:1.4;color:var(--ink-soft);}
   .scripture-quote cite{display:block;margin-top:4px;font-style:normal;font-size:12px;font-weight:700;color:var(--ink-faint);}
   .article-note{margin:0 0 18px;font-weight:700;color:var(--brown);}
@@ -1157,6 +1168,49 @@ function toYoutubeEmbed(url) {
     });
   }
 
+  // 글이 길 때 소제목만 먼저 보이고, 소제목을 누르면 그 아래 내용이
+  // 펼쳐지도록 합니다. 소제목(### )이 없는 짧은 글은 그대로 전체 노출됩니다.
+  function makeSubheadingsCollapsible(container) {
+    var headings = Array.prototype.slice.call(container.querySelectorAll('h3.article-h3'));
+    if (!headings.length) return;
+
+    headings.forEach(function (heading) {
+      var sectionNodes = [];
+      var sibling = heading.nextElementSibling;
+      while (sibling && headings.indexOf(sibling) === -1) {
+        var toMove = sibling;
+        sibling = sibling.nextElementSibling;
+        sectionNodes.push(toMove);
+      }
+      if (!sectionNodes.length) return;
+
+      var body = document.createElement('div');
+      body.className = 'story-section-body';
+      var inner = document.createElement('div');
+      inner.className = 'story-section-inner';
+      sectionNodes.forEach(function (node) { inner.appendChild(node); });
+      body.appendChild(inner);
+      heading.after(body);
+
+      heading.classList.add('story-section-toggle');
+      heading.setAttribute('role', 'button');
+      heading.setAttribute('tabindex', '0');
+      heading.setAttribute('aria-expanded', 'false');
+      heading.insertAdjacentHTML('beforeend',
+        '<span class="story-section-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg></span>'
+      );
+
+      var toggle = function () {
+        var isOpen = body.classList.toggle('is-open');
+        heading.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      };
+      heading.addEventListener('click', toggle);
+      heading.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    });
+  }
+
   function renderAttachments(container, attachments) {
     container.querySelectorAll('.attachment-row').forEach(function (el) { el.remove(); });
     if (!attachments || !attachments.length) return;
@@ -1296,6 +1350,7 @@ function toYoutubeEmbed(url) {
       document.getElementById('a-date').textContent = entry.date || '';
       renderTags(document.getElementById('a-tags'), entry.tags);
       renderBody(document.getElementById('a-body'), entry.body);
+      makeSubheadingsCollapsible(document.getElementById('a-body'));
       renderAttachments(document.getElementById('a-attachments'), entry.attachments);
   
       if (entry.video) {
