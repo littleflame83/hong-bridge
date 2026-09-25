@@ -285,10 +285,24 @@
 .article-modal-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border:0;border-radius:50%;background:var(--cream-deep);color:var(--ink);font-size:22px;line-height:1;cursor:pointer;z-index:2;}
 .share-btn{position:absolute;top:14px;right:60px;width:36px;height:36px;border:0;border-radius:50%;background:var(--cream-deep);color:var(--ink);cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;transition:background-color .15s ease;}
 .share-btn:hover{background:var(--tag-bg);color:var(--brown-dark);}
-.page-share-btn{position:static;display:inline-flex;margin-left:10px;}
-.page-head-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
 #shareToast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;font-size:13.5px;font-weight:600;padding:10px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:2000;}
-#shareToast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#shareToast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+.share-sheet-backdrop{position:fixed;inset:0;background:rgba(20,14,9,.5);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:2100;display:flex;align-items:center;justify-content:center;padding:16px;}
+.share-sheet-backdrop.hidden{display:none;}
+.share-sheet{position:relative;width:min(92vw,430px);background:var(--card);border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,.3);padding:26px 24px;}
+.share-sheet-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border:0;border-radius:50%;background:var(--cream-deep);color:var(--ink);font-size:20px;line-height:1;cursor:pointer;}
+.share-sheet-eyebrow{margin:0 0 6px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--brown);}
+.share-sheet-title{margin:0;padding-right:36px;font-size:18px;font-weight:800;color:var(--ink);}
+.share-sheet-subtitle{margin:8px 0 0;font-size:12.5px;color:var(--ink-faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.share-sheet-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;}
+.share-choice{border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left;background:var(--cream);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;font:inherit;}
+.share-choice:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(43,32,19,.12);}
+.share-choice-kakao{background:rgba(254,229,0,.18);border-color:rgba(254,229,0,.4);}
+.share-choice-facebook{background:rgba(24,119,242,.08);border-color:rgba(24,119,242,.2);}
+.share-choice-label{display:block;font-size:13.5px;font-weight:800;color:var(--ink);}
+.share-choice-hint{display:block;margin-top:4px;font-size:11px;color:var(--ink-faint);}
+.share-copy-only{display:block;width:100%;margin-top:16px;padding:10px;border:0;background:none;font-size:13px;font-weight:700;color:var(--ink-faint);cursor:pointer;text-align:center;}
+.share-copy-only:hover{color:var(--ink);}
 .article-modal-scroll{overflow-y:auto;}
 .article-wrap{max-width:100%;margin:0 auto;padding:56px 28px 40px;}
 @media (max-width:640px){
@@ -427,11 +441,11 @@
   </a>
   <div class="header-right">
     <nav id="main-nav">
-      <a href="index.html?page=writing">글</a>
-      <a href="index.html?page=lectures">성경강의</a>
-      <a href="index.html?page=sermons">설교</a>
-      <a href="index.html?page=intro">소개</a>
-      <a class="cta" href="index.html?page=apply">설교·강의 신청</a>
+      <a href="/writing/">글</a>
+      <a href="/lectures/">성경강의</a>
+      <a href="/sermons/">설교</a>
+      <a href="/intro/">소개</a>
+      <a class="cta" href="/apply/">설교·강의 신청</a>
     </nav>
     <div class="site-search">
       <button class="icon-btn" type="button" id="search-trigger-btn" aria-label="검색 열기">
@@ -461,7 +475,7 @@
   <p class="lede">신학과 목회를 잇는 이야기</p>
   <h1>성경을 읽고 신학을 공부하며 설교를 생각합니다</h1>
   <p class="sub">이곳은 고민의 결과가 모인 곳입니다</p>
-  <a class="hero-intro-link" href="index.html?page=intro">Hong-Bridge 소개 →</a>
+  <a class="hero-intro-link" href="/intro/">Hong-Bridge 소개 →</a>
   <a class="hero-scroll bob" href="javascript:void(0)" aria-label="아래로 스크롤" onclick="document.getElementById('writing').scrollIntoView({behavior:'smooth'})">
     <span>Scroll</span>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m0 0l-6-6m6 6l6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -474,7 +488,7 @@
     <h2>글</h2>
   </div>
   <div class="grid2" id="writing-cards"></div>
-  <div class="section-more"><a href="index.html?page=writing">글 전체보기</a></div>
+  <div class="section-more"><a href="/writing/">글 전체보기</a></div>
 </section>
 
 <!-- ===== 성경 강의 ===== -->
@@ -484,13 +498,13 @@
   </div>
   <div class="lecture-list">
 
-    <a class="lecture-row" href="index.html?page=lectures&course=ot">
+    <a class="lecture-row" href="/lectures/ot/">
       <span class="lecture-title">구약성경 10주</span>
       <span class="lecture-desc">구약성경 전체를 하나의 흐름으로 이해하기 위한 10주 강의</span>
       <span class="arrow">→</span>
     </a>
 
-    <a class="lecture-row" href="index.html?page=lectures&course=nt">
+    <a class="lecture-row" href="/lectures/nt/">
       <span class="lecture-title">신약성경 10주</span>
       <span class="lecture-desc">복음서에서 서신서까지, 신약을 관통하는 이야기를 따라간다</span>
       <span class="arrow">→</span>
@@ -505,7 +519,7 @@
     <h2>설교</h2>
   </div>
   <div class="grid2" id="sermon-cards"></div>
-  <div class="section-more"><a href="index.html?page=sermons">설교 전체보기</a></div>
+  <div class="section-more"><a href="/sermons/">설교 전체보기</a></div>
 </section>
 
 <!-- ===== 태그로 연결된 글 (크로스링크 데모) ===== -->
@@ -563,7 +577,7 @@
 <div class="article-modal hidden" id="articleModal" role="dialog" aria-modal="true">
   <div class="article-modal-box">
     <button class="share-btn" id="articleShareBtn" data-share-title-el="a-title" aria-label="공유하기" type="button">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4m0 0L7 9m5-5l5 5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 14v4a2 2 0 002 2h10a2 2 0 002-2v-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <button class="article-modal-close" id="articleModalClose" aria-label="닫기" type="button">×</button>
     <div class="article-modal-scroll">
@@ -589,7 +603,7 @@
             <div class="cta-block cta-apply">
               <p class="cta-title">설교나 강의를 요청하고 싶으신가요?</p>
               <p class="cta-desc">여기를 통해 신청해주시길 바랍니다.</p>
-              <a class="cta-btn cta-btn-solid" href="index.html?page=apply">설교·강의 신청하기 →</a>
+              <a class="cta-btn cta-btn-solid" href="/apply/">설교·강의 신청하기 →</a>
             </div>
           </div>
         </div>
@@ -609,12 +623,7 @@
 <div id="view-lectures" style="display:none;">
 <main>
   <div class="lec-wrap">
-    <div class="page-head-row">
-      <h1 id="lectures-h1">성경 강의</h1>
-      <button class="page-share-btn share-btn" type="button" aria-label="공유하기" data-share-title-el="lectures-h1">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
-      </button>
-    </div>
+    <h1>성경 강의</h1>
     <p class="lec-intro">제가 사역했던 대구신광교회에서 구약, 신약 각 10주에 걸쳐 강의했던 내용입니다</p>
 
     <div class="course-tabs" id="course-tabs"></div>
@@ -626,10 +635,7 @@
 
 <div id="view-intro" style="display:none;">
 <main>
-  <div class="about-wrap" style="max-width:760px;margin:0 auto;padding:64px 24px 80px;position:relative;">
-  <button class="page-share-btn share-btn" type="button" aria-label="공유하기" style="position:absolute;top:20px;right:20px;" data-share-title-el="intro-title-anchor">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
-  </button>
+  <div class="about-wrap" style="max-width:760px;margin:0 auto;padding:64px 24px 80px;">
 <div class="reveal mb-10 sm:mb-14" style="display:flex;align-items:stretch;gap:20px;flex-wrap:wrap;">
   <div style="flex:1;min-width:200px;text-align:left;display:flex;flex-direction:column;justify-content:center;">
     <p class="text-ember text-xs font-bold tracking-[0.25em] uppercase mb-3">My Story</p>
@@ -696,7 +702,7 @@
 <div class="pb-8 sm:pb-9 pl-0 sm:pl-16 pr-2 sm:pr-6 text-sm sm:text-base text-ink-600 leading-loose space-y-4 pt-1">
 <p>선교지에 있다보니 일정과 상황을 맞춰야 합니다.</p>
 <p>자세한 내용은 문의는 여기로 연락해 주세요.</p>
-<a href="index.html?page=apply" class="mt-2 flex w-fit mx-auto items-center justify-center gap-1.5 bg-ember text-white font-semibold text-sm px-5 py-3 rounded-full shadow-soft hover:bg-ember-dark transition-colors">문의하기 ▶</a>
+<a href="/apply/" class="mt-2 flex w-fit mx-auto items-center justify-center gap-1.5 bg-ember text-white font-semibold text-sm px-5 py-3 rounded-full shadow-soft hover:bg-ember-dark transition-colors">문의하기 ▶</a>
 </div>
 </details>
 
@@ -811,12 +817,7 @@
 <div id="view-sermons" style="display:none;">
 <main>
   <div class="lec-wrap">
-    <div class="page-head-row">
-      <h1 id="sermons-h1">설교</h1>
-      <button class="page-share-btn share-btn" type="button" aria-label="공유하기" data-share-title-el="sermons-h1">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
-      </button>
-    </div>
+    <h1>설교</h1>
     <p class="lec-intro">본문을 따라간 설교를 영상으로 만나보실 수 있습니다.</p>
     <div class="week-grid" id="sermon-list"></div>
   </div>
@@ -826,12 +827,7 @@
 <div id="view-writing" style="display:none;">
 <main>
   <div class="lec-wrap">
-    <div class="page-head-row">
-      <h1 id="writing-h1">글</h1>
-      <button class="page-share-btn share-btn" type="button" aria-label="공유하기" data-share-title-el="writing-h1">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
-      </button>
-    </div>
+    <h1>글</h1>
     <p class="lec-intro">성경을 읽고 신학을 공부하며 정리한 글입니다.</p>
     <div class="grid2 writing-list-grid" id="writing-list-grid"></div>
   </div>
@@ -845,7 +841,7 @@
       <div class="lecture-video-title" id="lectureVideoTitle"></div>
       <div style="display:flex;align-items:center;gap:8px;flex:0 0 auto;">
         <button class="lecture-video-close" type="button" id="lectureVideoShareBtn" aria-label="공유하기" style="font-size:0;display:flex;align-items:center;justify-content:center;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4m0 0L7 9m5-5l5 5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 14v4a2 2 0 002 2h10a2 2 0 002-2v-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <button class="lecture-video-close" type="button" id="lectureVideoClose" aria-label="닫기">×</button>
       </div>
@@ -892,6 +888,34 @@
 </footer>
 
 <div id="shareToast"></div>
+
+<div class="share-sheet-backdrop hidden" id="shareSheet">
+  <div class="share-sheet">
+    <button class="share-sheet-close" id="shareSheetClose" aria-label="닫기" type="button">×</button>
+    <p class="share-sheet-eyebrow">Share</p>
+    <h3 class="share-sheet-title">이 내용을 어디로 공유할까요?</h3>
+    <p class="share-sheet-subtitle" id="shareSheetSubtitle"></p>
+    <div class="share-sheet-grid">
+      <button class="share-choice share-choice-kakao" id="shareKakao" type="button">
+        <span class="share-choice-label">💬 KakaoTalk</span>
+        <span class="share-choice-hint">카카오톡으로 공유</span>
+      </button>
+      <button class="share-choice share-choice-facebook" id="shareFacebook" type="button">
+        <span class="share-choice-label">f Facebook</span>
+        <span class="share-choice-hint">Facebook에 공유</span>
+      </button>
+      <button class="share-choice" id="shareInstagram" type="button">
+        <span class="share-choice-label">◎ Instagram</span>
+        <span class="share-choice-hint">링크 복사 후 Instagram</span>
+      </button>
+      <button class="share-choice" id="shareThreads" type="button">
+        <span class="share-choice-label">@ Threads</span>
+        <span class="share-choice-hint">Threads에 공유</span>
+      </button>
+    </div>
+    <button class="share-copy-only" id="shareCopyOnly" type="button">🔗 링크만 복사</button>
+  </div>
+</div>
 
 <script>
 if ('scrollRestoration' in history) {
@@ -1134,7 +1158,7 @@ function toYoutubeEmbed(url) {
         var fig = document.createElement('figure');
         fig.style.margin = '0 0 22px';
         var img = document.createElement('img');
-        img.src = imgMatch[2];
+        img.src = resolveAsset(imgMatch[2]);
         img.alt = imgMatch[1];
         img.style.borderRadius = '6px';
         fig.appendChild(img);
@@ -1170,7 +1194,7 @@ function toYoutubeEmbed(url) {
         wrap.style.cssText = 'text-align:center;margin:8px 0 28px;';
         var a = document.createElement('a');
         a.className = 'cta-btn cta-btn-solid';
-        a.href = 'index.html?page=sermons&video=' + encodeURIComponent(sermonId);
+        a.href = buildPath({ page: 'sermons', video: sermonId });
         a.textContent = '이 글과 관련된 설교 보기 →';
         wrap.appendChild(a);
         container.appendChild(wrap);
@@ -1252,7 +1276,7 @@ function toYoutubeEmbed(url) {
     attachments.forEach(function (a) {
       var row = document.createElement('a');
       row.className = 'attachment-row';
-      row.href = a.path;
+      row.href = resolveAsset(a.path);
       row.setAttribute('download', '');
       row.innerHTML =
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>' +
@@ -1263,7 +1287,7 @@ function toYoutubeEmbed(url) {
 
   
   function initHome() {
-  fetch('data/writing.json').then(function (r) { return r.json(); }).then(function (items) {
+  fetch(BASE_PATH + 'data/writing.json').then(function (r) { return r.json(); }).then(function (items) {
       var sorted = items.slice().sort(function (a, b) {
         return (b.date || '').localeCompare(a.date || '');
       });
@@ -1273,13 +1297,13 @@ function toYoutubeEmbed(url) {
       top4.forEach(function (item) {
         var a = document.createElement('a');
         a.className = 'card';
-        a.href = 'index.html?id=' + encodeURIComponent(item.id);
+        a.href = buildPath({ page: 'article', id: item.id });
         var cat = [item.mainCategory, item.subCategory].filter(Boolean).join(' · ');
         var tagsHtml = (item.tags || []).map(function (t) {
           return '<span class="tag">' + t + '</span>';
         }).join('');
         a.innerHTML =
-          '<div class="thumb">' + (item.thumbnail ? '<img src="' + item.thumbnail + '" style="width:100%;height:100%;object-fit:cover;">' : '[대표 이미지]') + '</div>' +
+          '<div class="thumb">' + (item.thumbnail ? '<img src="' + resolveAsset(item.thumbnail) + '" style="width:100%;height:100%;object-fit:cover;">' : '[대표 이미지]') + '</div>' +
           '<div class="body">' +
           '<span class="cat">' + cat + '</span>' +
           '<h3>' + item.title + '</h3>' +
@@ -1291,7 +1315,7 @@ function toYoutubeEmbed(url) {
       translateIfNeeded(wrap);
   
       // 설교 카드는 같은 태그를 가진 글과 연결해야 하므로 writing 목록을 함께 사용
-      fetch('data/sermons.json').then(function (r) { return r.json(); }).then(function (sermonItems) {
+      fetch(BASE_PATH + 'data/sermons.json').then(function (r) { return r.json(); }).then(function (sermonItems) {
         var withVideo = sermonItems.filter(function (s) { return s.video; });
         var sortedSermons = withVideo.slice().sort(function (a, b) {
           return (b.date || '').localeCompare(a.date || '');
@@ -1320,7 +1344,7 @@ function toYoutubeEmbed(url) {
             (s.summary ? '<span class="week-summary">' + escapeHtml(s.summary) + '</span>' : '') +
             '</div>';
           card.addEventListener('click', function () {
-            openLectureVideo(s.video, s.title, relatedId, 'page=sermons&video=' + encodeURIComponent(s.id));
+            openLectureVideo(s.video, s.title, relatedId, buildPath({ page: 'sermons', video: s.id }));
           });
           sermonWrap.appendChild(card);
         });
@@ -1331,9 +1355,9 @@ function toYoutubeEmbed(url) {
 
   function initArticle(articleId) {
   Promise.all([
-      fetch('data/writing.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
-      fetch('data/sermons.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
-      fetch('data/lectures.json').then(function (r) { return r.json(); }).catch(function () { return []; })
+      fetch(BASE_PATH + 'data/writing.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
+      fetch(BASE_PATH + 'data/sermons.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
+      fetch(BASE_PATH + 'data/lectures.json').then(function (r) { return r.json(); }).catch(function () { return []; })
     ]).then(function (results) {
       var writing = results[0].map(function (e) { return Object.assign({}, e, { sourceType: 'writing', pillLabel: '글' }); });
       var sermons = results[1].map(function (e) { return Object.assign({}, e, { sourceType: 'sermon', pillLabel: '설교' }); });
@@ -1404,7 +1428,7 @@ function toYoutubeEmbed(url) {
           related.forEach(function (r) {
             var a = document.createElement('a');
             a.className = 'tag-row';
-            a.href = 'index.html?id=' + encodeURIComponent(r.id);
+            a.href = buildPath({ page: 'article', id: r.id });
             a.innerHTML =
               '<span class="pill">' + r.pillLabel + '</span>' +
               '<span class="title">' + r.title + '</span>' +
@@ -1432,14 +1456,14 @@ var lecCourses = [];
   var lectureVideoTitle = document.getElementById('lectureVideoTitle');
   var lectureVideoRelated = document.getElementById('lectureVideoRelated');
 
-  function openLectureVideo(videoUrl, title, relatedArticleId, shareQuery) {
+  function openLectureVideo(videoUrl, title, relatedArticleId, sharePath) {
     var videoId = getYoutubeId(videoUrl);
     if (!videoId) return;
     lectureVideoTitle.textContent = title || '';
     lectureVideoFrame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
     lectureVideoFrame.title = title || '성경 강의';
     if (relatedArticleId) {
-      lectureVideoRelated.innerHTML = '<a class="cta-btn cta-btn-solid" href="index.html?id=' + encodeURIComponent(relatedArticleId) + '">이 영상과 관련된 글 보기 →</a>';
+      lectureVideoRelated.innerHTML = '<a class="cta-btn cta-btn-solid" href="' + buildPath({ page: 'article', id: relatedArticleId }) + '">이 영상과 관련된 글 보기 →</a>';
       lectureVideoRelated.style.display = 'block';
     } else {
       lectureVideoRelated.innerHTML = '';
@@ -1448,8 +1472,8 @@ var lecCourses = [];
     lectureVideoModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     translateIfNeeded(lectureVideoModal.querySelector('.lecture-video-box'));
-    if (shareQuery) {
-      history.pushState({}, '', 'index.html?' + shareQuery);
+    if (sharePath) {
+      history.pushState({}, '', sharePath);
     }
   }
 
@@ -1458,9 +1482,7 @@ var lecCourses = [];
     lectureVideoFrame.src = '';
     document.body.style.overflow = '';
     if (!skipUrlChange) {
-      var url = new URL(window.location.href);
-      url.searchParams.delete('video');
-      history.pushState({}, '', url.toString());
+      history.pushState({}, '', getCurrentBackgroundPath());
     }
   }
 
@@ -1477,7 +1499,7 @@ var lecCourses = [];
 
 
   function initLectures(courseParam, autoOpenVideoId) {
-  fetch('data/lectures.json').then(function (r) { return r.json(); }).then(function (data) {
+  fetch(BASE_PATH + 'data/lectures.json').then(function (r) { return r.json(); }).then(function (data) {
     lecCourses = data;
     if (courseParam === 'ot') lecActiveCourseId = 'ot-10weeks';
     else if (courseParam === 'nt') lecActiveCourseId = 'nt-10weeks';
@@ -1540,7 +1562,7 @@ var lecCourses = [];
       card.addEventListener('click', function () {
         if (w.video) {
           var courseCode = lecActiveCourseId.indexOf('ot') === 0 ? 'ot' : 'nt';
-          openLectureVideo(w.video, (w.week + '강 · ' + w.title), null, 'page=lectures&course=' + courseCode + '&video=' + encodeURIComponent(w.id));
+          openLectureVideo(w.video, (w.week + '강 · ' + w.title), null, buildPath({ page: 'lectures', course: courseCode, video: w.id }));
         }
       });
       listEl.appendChild(card);
@@ -1632,23 +1654,68 @@ var lecCourses = [];
     shareToastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200);
   }
 
-  function shareContent(url, title, text) {
-    if (navigator.share) {
-      navigator.share({ title: title || '', text: text || '', url: url }).catch(function () {});
-    } else if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(function () {
-        showShareToast('링크가 복사되었습니다');
-      }).catch(function () {
-        window.prompt('아래 링크를 복사하세요', url);
-      });
-    } else {
-      window.prompt('아래 링크를 복사하세요', url);
-    }
+  var activeShareUrl = '';
+  var activeShareTitle = '';
+
+  function shareContent(url, title) {
+    activeShareUrl = url;
+    activeShareTitle = title || '';
+    document.getElementById('shareSheetSubtitle').textContent = activeShareTitle;
+    document.getElementById('shareSheet').classList.remove('hidden');
   }
 
-  function shareIconSvg() {
-    return '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>';
+  function closeShareSheet() {
+    document.getElementById('shareSheet').classList.add('hidden');
   }
+
+  function copyShareUrl() {
+    var doCopy = (navigator.clipboard && navigator.clipboard.writeText)
+      ? navigator.clipboard.writeText(activeShareUrl)
+      : Promise.reject();
+    return doCopy.catch(function () {
+      var t = document.createElement('textarea');
+      t.value = activeShareUrl;
+      t.style.position = 'fixed';
+      t.style.opacity = '0';
+      document.body.appendChild(t);
+      t.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(t);
+    }).then(function () {
+      showShareToast('링크가 복사되었습니다');
+    });
+  }
+
+  document.getElementById('shareSheetClose').addEventListener('click', closeShareSheet);
+  document.getElementById('shareSheet').addEventListener('click', function (e) {
+    if (e.target.id === 'shareSheet') closeShareSheet();
+  });
+  document.getElementById('shareCopyOnly').addEventListener('click', function () {
+    copyShareUrl();
+  });
+  document.getElementById('shareFacebook').addEventListener('click', function () {
+    copyShareUrl().then(function () {
+      window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(activeShareUrl), '_blank', 'noopener,noreferrer');
+    });
+  });
+  document.getElementById('shareThreads').addEventListener('click', function () {
+    var intent = 'https://www.threads.com/intent/post?text=' + encodeURIComponent(activeShareTitle) + '&url=' + encodeURIComponent(activeShareUrl);
+    window.open(intent, '_blank', 'noopener,noreferrer');
+  });
+  document.getElementById('shareInstagram').addEventListener('click', function () {
+    copyShareUrl().then(function () {
+      showShareToast('링크를 복사했습니다. Instagram에서 붙여넣어 주세요.');
+    });
+  });
+  document.getElementById('shareKakao').addEventListener('click', function () {
+    if (navigator.share) {
+      navigator.share({ title: activeShareTitle, text: activeShareTitle, url: activeShareUrl }).catch(function () {});
+      return;
+    }
+    copyShareUrl().then(function () {
+      showShareToast('링크를 복사했습니다. 카카오톡에서 붙여넣어 주세요.');
+    });
+  });
 
   document.querySelectorAll('.share-btn').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
@@ -1666,10 +1733,7 @@ var lecCourses = [];
     var scrollEl = document.querySelector('.article-modal-scroll');
     if (scrollEl) scrollEl.scrollTop = 0;
     if (pushUrl !== false) {
-      var url = new URL(window.location.href);
-      url.searchParams.set('id', id);
-      url.searchParams.delete('page');
-      history.pushState({ articleId: id }, '', url.toString());
+      history.pushState({ articleId: id }, '', buildPath({ page: 'article', id: id }));
     }
   }
 
@@ -1677,9 +1741,7 @@ var lecCourses = [];
     articleModal.classList.add('hidden');
     document.body.style.overflow = '';
     if (updateUrl !== false) {
-      var url = new URL(window.location.href);
-      url.searchParams.delete('id');
-      history.pushState({}, '', url.toString());
+      history.pushState({}, '', getCurrentBackgroundPath());
     }
   }
 
@@ -1689,17 +1751,6 @@ var lecCourses = [];
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !articleModal.classList.contains('hidden')) closeArticleModal();
-  });
-
-  // 사이트 어디서든 "index.html?id=..." 링크는 새 페이지로 이동하지 않고 글 모달로 엽니다.
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('a[href^="index.html?id="]');
-    if (!a) return;
-    e.preventDefault();
-    var url = new URL(a.href, window.location.href);
-    var id = url.searchParams.get('id');
-    if (!lectureVideoModal.classList.contains('hidden')) closeLectureVideo(true);
-    openArticleModal(id);
   });
 
   function findRelatedWritingId(item, writingItems) {
@@ -1712,8 +1763,8 @@ var lecCourses = [];
 
   function initSermonsPage(autoOpenId) {
     Promise.all([
-      fetch('data/sermons.json').then(function (r) { return r.json(); }),
-      fetch('data/writing.json').then(function (r) { return r.json(); }).catch(function () { return []; })
+      fetch(BASE_PATH + 'data/sermons.json').then(function (r) { return r.json(); }),
+      fetch(BASE_PATH + 'data/writing.json').then(function (r) { return r.json(); }).catch(function () { return []; })
     ]).then(function (results) {
       var items = results[0];
       var writingItems = results[1];
@@ -1740,7 +1791,7 @@ var lecCourses = [];
           '</div>';
         card.addEventListener('click', function () {
           if (s.video) {
-            openLectureVideo(s.video, s.title, findRelatedWritingId(s, writingItems), 'page=sermons&video=' + encodeURIComponent(s.id));
+            openLectureVideo(s.video, s.title, findRelatedWritingId(s, writingItems), buildPath({ page: 'sermons', video: s.id }));
           } else {
             openArticleModal(s.id);
           }
@@ -1759,7 +1810,7 @@ var lecCourses = [];
   }
 
   function initWritingListPage() {
-    fetch('data/writing.json').then(function (r) { return r.json(); }).then(function (items) {
+    fetch(BASE_PATH + 'data/writing.json').then(function (r) { return r.json(); }).then(function (items) {
       var sorted = items.slice().sort(function (a, b) {
         return (b.date || '').localeCompare(a.date || '');
       });
@@ -1768,13 +1819,13 @@ var lecCourses = [];
       sorted.forEach(function (item) {
         var a = document.createElement('a');
         a.className = 'card';
-        a.href = 'index.html?id=' + encodeURIComponent(item.id);
+        a.href = buildPath({ page: 'article', id: item.id });
         var cat = [item.mainCategory, item.subCategory].filter(Boolean).join(' · ');
         var tagsHtml = (item.tags || []).map(function (t) {
           return '<span class="tag">' + escapeHtml(t) + '</span>';
         }).join('');
         a.innerHTML =
-          '<div class="thumb">' + (item.thumbnail ? '<img src="' + item.thumbnail + '" style="width:100%;height:100%;object-fit:cover;">' : '[대표 이미지]') + '</div>' +
+          '<div class="thumb">' + (item.thumbnail ? '<img src="' + resolveAsset(item.thumbnail) + '" style="width:100%;height:100%;object-fit:cover;">' : '[대표 이미지]') + '</div>' +
           '<div class="body">' +
           '<span class="cat">' + escapeHtml(cat) + '</span>' +
           '<h3>' + escapeHtml(item.title) + '</h3>' +
@@ -1802,9 +1853,9 @@ var lecCourses = [];
   function buildSearchIndex() {
     if (searchIndexPromise) return searchIndexPromise;
     searchIndexPromise = Promise.all([
-      fetch('data/writing.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
-      fetch('data/sermons.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
-      fetch('data/lectures.json').then(function (r) { return r.json(); }).catch(function () { return []; })
+      fetch(BASE_PATH + 'data/writing.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
+      fetch(BASE_PATH + 'data/sermons.json').then(function (r) { return r.json(); }).catch(function () { return []; }),
+      fetch(BASE_PATH + 'data/lectures.json').then(function (r) { return r.json(); }).catch(function () { return []; })
     ]).then(function (results) {
       var writing = results[0], sermons = results[1], lecturesRaw = results[2];
       var items = [];
@@ -1910,7 +1961,7 @@ var lecCourses = [];
         btn.type = 'button';
         btn.className = 'search-card';
         var videoId = getYoutubeId(r.video);
-        var thumbSrc = r.thumbnail || (videoId ? 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg' : '');
+        var thumbSrc = r.thumbnail ? resolveAsset(r.thumbnail) : (videoId ? 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg' : '');
         btn.innerHTML =
           '<div class="thumb">' + (thumbSrc ? '<img src="' + thumbSrc + '" loading="lazy" alt="' + escapeHtml(r.title) + '">' : '') + '</div>' +
           '<div class="body">' +
@@ -1922,8 +1973,8 @@ var lecCourses = [];
           closeSearchOverlay();
           if (r.video) {
             var shareQ = r.type === 'lecture'
-              ? 'page=lectures&course=' + r.course + '&video=' + encodeURIComponent(r.id)
-              : 'page=sermons&video=' + encodeURIComponent(r.id);
+              ? buildPath({ page: 'lectures', course: r.course, video: r.id })
+              : buildPath({ page: 'sermons', video: r.id });
             openLectureVideo(r.video, r.title, null, shareQ);
           } else {
             openArticleModal(r.id);
@@ -1949,22 +2000,88 @@ var lecCourses = [];
     if (e.key === 'Escape' && !searchOverlay.classList.contains('hidden')) closeSearchOverlay();
   });
 
-  function route() {
-    var params = new URLSearchParams(window.location.search);
-    var page = params.get('page');
+  var BASE_PATH = (window.location.hostname.indexOf('github.io') !== -1) ? '/hong-bridge/' : '/';
 
-    if (page === 'lectures') {
+  function resolveAsset(p) {
+    if (!p) return '';
+    if (/^(https?:|data:)/.test(p)) return p;
+    return BASE_PATH + p;
+  }
+
+  function normalizeRoutePath(pathname) {
+    var p = pathname;
+    if (p.indexOf(BASE_PATH) === 0) p = p.slice(BASE_PATH.length);
+    else if (p.charAt(0) === '/') p = p.slice(1);
+    return p.replace(/^\/+|\/+$/g, '');
+  }
+
+  function parseRoute(pathname) {
+    var rel = normalizeRoutePath(pathname);
+    var parts = rel ? rel.split('/').filter(Boolean) : [];
+    if (parts.length === 0) return { page: 'home' };
+    if (parts[0] === 'writing') {
+      if (parts[1]) return { page: 'article', id: decodeURIComponent(parts[1]) };
+      return { page: 'writing' };
+    }
+    if (parts[0] === 'lectures') {
+      if (parts[1] && parts[2]) return { page: 'lectures', course: parts[1], video: decodeURIComponent(parts[2]) };
+      if (parts[1]) return { page: 'lectures', course: parts[1] };
+      return { page: 'lectures' };
+    }
+    if (parts[0] === 'sermons') {
+      if (parts[1]) return { page: 'sermons', video: decodeURIComponent(parts[1]) };
+      return { page: 'sermons' };
+    }
+    if (parts[0] === 'intro') return { page: 'intro' };
+    if (parts[0] === 'apply') return { page: 'apply' };
+    return { page: 'home' };
+  }
+
+  function buildPath(r) {
+    var p;
+    if (r.page === 'article') p = 'writing/' + encodeURIComponent(r.id) + '/';
+    else if (r.page === 'writing') p = 'writing/';
+    else if (r.page === 'lectures') p = 'lectures/' + (r.course ? r.course + '/' : '') + (r.video ? encodeURIComponent(r.video) + '/' : '');
+    else if (r.page === 'sermons') p = 'sermons/' + (r.video ? encodeURIComponent(r.video) + '/' : '');
+    else if (r.page === 'intro') p = 'intro/';
+    else if (r.page === 'apply') p = 'apply/';
+    else p = '';
+    return BASE_PATH + p;
+  }
+
+  function getCurrentBackgroundPath() {
+    if (document.getElementById('view-writing').style.display !== 'none') return buildPath({ page: 'writing' });
+    if (document.getElementById('view-lectures').style.display !== 'none') {
+      var course = lecActiveCourseId && lecActiveCourseId.indexOf('ot') === 0 ? 'ot' : 'nt';
+      return buildPath({ page: 'lectures', course: course });
+    }
+    if (document.getElementById('view-sermons').style.display !== 'none') return buildPath({ page: 'sermons' });
+    if (document.getElementById('view-intro').style.display !== 'none') return buildPath({ page: 'intro' });
+    if (document.getElementById('view-apply').style.display !== 'none') return buildPath({ page: 'apply' });
+    return buildPath({ page: 'home' });
+  }
+
+  function renderRoute() {
+    var r = parseRoute(window.location.pathname);
+
+    if (r.page === 'article') {
+      openArticleModal(r.id, false);
+      return;
+    }
+    if (!articleModal.classList.contains('hidden')) closeArticleModal(false);
+
+    if (r.page === 'lectures') {
       showView('view-lectures');
-      initLectures(params.get('course'), params.get('video'));
-    } else if (page === 'sermons') {
+      initLectures(r.course, r.video);
+    } else if (r.page === 'sermons') {
       showView('view-sermons');
-      initSermonsPage(params.get('video'));
-    } else if (page === 'writing') {
+      initSermonsPage(r.video);
+    } else if (r.page === 'writing') {
       showView('view-writing');
       initWritingListPage();
-    } else if (page === 'intro') {
+    } else if (r.page === 'intro') {
       showView('view-intro');
-    } else if (page === 'apply') {
+    } else if (r.page === 'apply') {
       showView('view-apply');
     } else {
       showView('view-home');
@@ -1972,40 +2089,32 @@ var lecCourses = [];
     }
   }
 
-  function syncArticleModal() {
-    var id = new URLSearchParams(window.location.search).get('id');
-    if (id) {
-      openArticleModal(id, false);
-    } else if (!articleModal.classList.contains('hidden')) {
-      closeArticleModal(false);
-    }
-  }
-
   // 사이트 안의 다른 메뉴/링크를 눌러도 새로고침 없이 화면만 바뀌도록 가로챕니다.
-  // (index.html?id=... 링크는 위쪽에서 이미 별도로 글 모달로 처리합니다)
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href]');
     if (!a) return;
     if (a.hasAttribute('download') || a.target === '_blank') return;
     var href = a.getAttribute('href');
-    if (!href || href.indexOf('index.html') !== 0) return;
-    if (href.indexOf('index.html?id=') === 0) return; // 글 모달용 링크는 별도 처리
+    if (!href || href.indexOf('javascript:') === 0 || href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0 || href.indexOf('http') === 0) return;
+
+    var url;
+    try { url = new URL(href, window.location.href); } catch (err) { return; }
+    if (url.origin !== window.location.origin) return;
+
+    var routeInfo = parseRoute(url.pathname);
+    var canonicalPath = buildPath(routeInfo);
 
     e.preventDefault();
-    var url = new URL(href, window.location.href);
-    if (window.location.pathname + window.location.search === url.pathname + url.search) return;
-    history.pushState({}, '', url.toString());
+    if (!lectureVideoModal.classList.contains('hidden') && routeInfo.page === 'article') closeLectureVideo(true);
+    if (window.location.pathname === canonicalPath) return;
+    history.pushState({}, '', canonicalPath);
     window.scrollTo(0, 0);
-    route();
+    renderRoute();
   });
 
-  window.addEventListener('popstate', function () {
-    route();
-    syncArticleModal();
-  });
+  window.addEventListener('popstate', renderRoute);
 
-  route();
-  syncArticleModal();
+  renderRoute();
 
   (function () {
     var savedLang = null;
