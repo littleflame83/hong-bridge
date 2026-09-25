@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HONG-BRIDGE</title>
 <meta name="description" content="성경을 읽고 신학을 공부하며 설교를 생각합니다. 홍성화 목사의 신학 연구·설교 아카이브, HONG-BRIDGE입니다.">
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -189,9 +190,6 @@
   .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;}
   .tag{font-size:11px;padding:4px 10px;background:var(--tag-bg);color:var(--tag-text);border-radius:999px;}
 
-  .tag-section{background:var(--cream-deep);}
-  .tag-section h2{font-size:24px;margin:6px 0 4px;}
-  .tag-section .kicker{font-size:13px;font-weight:700;color:var(--ink-faint);}
   .tag-list{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:20px;}
   .tag-row{display:flex;align-items:center;gap:18px;padding:18px 22px;border-bottom:1px solid var(--line);}
   .tag-row:last-child{border-bottom:none;}
@@ -339,6 +337,18 @@
   .attachments-label{font-size:12px;font-weight:700;color:var(--ink-faint);margin-bottom:10px;}
   .attachment-row{display:inline-flex;align-items:center;gap:9px;font-size:14.5px;color:var(--cream);font-weight:700;padding:12px 22px;background:var(--brown);border-radius:999px;}
   .attachment-row:hover{opacity:.9;}
+  .article-prevnext{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:36px 0 0;padding-top:28px;border-top:1px solid var(--line);}
+  .prevnext-card{display:flex;flex-direction:column;gap:6px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:var(--cream);transition:box-shadow .15s ease,border-color .15s ease;}
+  .prevnext-card:hover{border-color:var(--brown);box-shadow:0 8px 20px rgba(43,32,19,.1);}
+  #a-next{text-align:right;align-items:flex-end;}
+  .prevnext-label{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--brown);}
+  .prevnext-title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.4;}
+  @media (max-width:560px){
+    .article-prevnext{grid-template-columns:1fr;}
+    #a-next{text-align:left;align-items:flex-start;}
+  }
+  .section-more-inline{display:inline-flex;align-items:center;gap:6px;padding:11px 26px;border:1.5px solid var(--brown);border-radius:999px;font-size:13.5px;font-weight:700;color:var(--brown);transition:background-color .15s ease,color .15s ease;}
+  .section-more-inline:hover{background:var(--brown);color:#fff;}
   .article-cta-group{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:40px 0;}
   .cta-block{padding:18px 20px;border-radius:10px;background:var(--cream-deep);display:flex;flex-direction:column;}
   .cta-block .cta-title{margin:0 0 6px;font-weight:700;color:var(--ink);font-size:14.5px;line-height:1.4;}
@@ -523,31 +533,6 @@
   <div class="section-more"><a href="/sermons/">설교 전체보기</a></div>
 </section>
 
-<!-- ===== 태그로 연결된 글 (크로스링크 데모) ===== -->
-<section class="tag-section">
-  <span class="kicker">태그로 연결된 글</span>
-  <h2>#영생</h2>
-  <p style="margin:0;font-size:14px;color:var(--ink-soft);">메뉴 구분과 상관없이, 같은 주제를 다룬 글을 한 곳에서 볼 수 있습니다.</p>
-
-  <div class="tag-list">
-    <a class="tag-row" href="#">
-      <span class="pill">글</span>
-      <span class="title">영생 개념의 신학사적 변천 — 공관복음과 요한복음의 차이</span>
-      <span class="date">2026.08.14</span>
-    </a>
-    <a class="tag-row" href="#">
-      <span class="pill">설교</span>
-      <span class="title">장례식에 맞지 않는, 그러나 가장 잘 맞는 이야기</span>
-      <span class="date">2026.09.01</span>
-    </a>
-    <a class="tag-row" href="#">
-      <span class="pill">성경 강의</span>
-      <span class="title">신약성경 10주 — 3강: 영생과 하나님나라</span>
-      <span class="date">2026.09.10</span>
-    </a>
-  </div>
-</section>
-
 
 </div>
 
@@ -594,6 +579,19 @@
           <div class="article-body" id="a-body"></div>
           <div class="attachments" id="a-attachments" style="display:none;">
             <div class="attachments-label">첨부파일</div>
+          </div>
+          <div class="article-prevnext" id="a-prevnext" style="display:none;">
+            <a class="prevnext-card" id="a-prev" style="display:none;">
+              <span class="prevnext-label">← 이전 글</span>
+              <span class="prevnext-title" id="a-prev-title"></span>
+            </a>
+            <a class="prevnext-card" id="a-next" style="display:none;">
+              <span class="prevnext-label">다음 글 →</span>
+              <span class="prevnext-title" id="a-next-title"></span>
+            </a>
+          </div>
+          <div style="text-align:center;margin:28px 0;">
+            <a class="section-more-inline" href="/writing/">글 전체보기</a>
           </div>
           <div class="article-cta-group">
             <div class="cta-block cta-chat">
@@ -1389,6 +1387,7 @@ function toYoutubeEmbed(url) {
       }
   
       document.title = entry.title + ' | HONG-BRIDGE';
+      currentArticleImage = entry.thumbnail ? resolveAsset(entry.thumbnail) : (entry.video ? 'https://img.youtube.com/vi/' + getYoutubeId(entry.video) + '/hqdefault.jpg' : '');
       var metaDesc = document.querySelector('meta[name="description"]');
       if (!metaDesc) {
         metaDesc = document.createElement('meta');
@@ -1404,6 +1403,9 @@ function toYoutubeEmbed(url) {
       document.getElementById('a-attachments').style.display = 'none';
       document.getElementById('a-related-wrap').style.display = 'none';
       document.getElementById('a-related').innerHTML = '';
+      document.getElementById('a-prevnext').style.display = 'none';
+      document.getElementById('a-prev').style.display = 'none';
+      document.getElementById('a-next').style.display = 'none';
       document.getElementById('a-cat').textContent = [entry.mainCategory, entry.subCategory].filter(Boolean).join(' · ');
       document.getElementById('a-title').textContent = entry.title;
       document.getElementById('a-date').textContent = entry.date || '';
@@ -1438,6 +1440,27 @@ function toYoutubeEmbed(url) {
           });
         }
       }
+
+      if (entry.sourceType === 'writing') {
+        var sameType = writing.slice().sort(function (a, b) {
+          return (a.date || '').localeCompare(b.date || '');
+        });
+        var idx = sameType.findIndex(function (w) { return w.id === entry.id; });
+        if (idx !== -1 && sameType.length > 1) {
+          var prevItem = sameType[(idx - 1 + sameType.length) % sameType.length];
+          var nextItem = sameType[(idx + 1) % sameType.length];
+          document.getElementById('a-prevnext').style.display = 'grid';
+          var prevEl = document.getElementById('a-prev');
+          prevEl.style.display = 'flex';
+          prevEl.href = buildPath({ page: 'article', id: prevItem.id });
+          document.getElementById('a-prev-title').textContent = prevItem.title;
+          var nextEl = document.getElementById('a-next');
+          nextEl.style.display = 'flex';
+          nextEl.href = buildPath({ page: 'article', id: nextItem.id });
+          document.getElementById('a-next-title').textContent = nextItem.title;
+        }
+      }
+
       translateIfNeeded(document.getElementById('article-loaded'));
     });
   
@@ -1489,7 +1512,9 @@ var lecCourses = [];
 
   document.getElementById('lectureVideoClose').addEventListener('click', function () { closeLectureVideo(); });
   document.getElementById('lectureVideoShareBtn').addEventListener('click', function () {
-    shareContent(window.location.href, lectureVideoTitle.textContent, lectureVideoTitle.textContent);
+    var vid = getYoutubeId(lectureVideoFrame.src);
+    var img = vid ? 'https://img.youtube.com/vi/' + vid + '/hqdefault.jpg' : '';
+    shareContent(window.location.href, lectureVideoTitle.textContent, img);
   });
   lectureVideoModal.addEventListener('click', function (e) {
     if (e.target === lectureVideoModal) closeLectureVideo();
@@ -1665,12 +1690,22 @@ var lecCourses = [];
     shareToastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200);
   }
 
+  var KAKAO_JS_KEY = 'YOUR_KAKAO_JS_KEY';
+  try {
+    if (window.Kakao && !Kakao.isInitialized()) {
+      Kakao.init(KAKAO_JS_KEY);
+    }
+  } catch (e) {}
+
   var activeShareUrl = '';
+  var activeShareImage = '';
+  var currentArticleImage = '';
   var activeShareTitle = '';
 
-  function shareContent(url, title) {
+  function shareContent(url, title, image) {
     activeShareUrl = url;
     activeShareTitle = title || '';
+    activeShareImage = image || resolveAsset('images/og-default.jpg');
     document.getElementById('shareSheetSubtitle').textContent = activeShareTitle;
     document.getElementById('shareSheet').classList.remove('hidden');
   }
@@ -1719,6 +1754,22 @@ var lecCourses = [];
     });
   });
   document.getElementById('shareKakao').addEventListener('click', function () {
+    if (window.Kakao && Kakao.Share && Kakao.isInitialized && Kakao.isInitialized()) {
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: activeShareTitle || 'HONG-BRIDGE',
+          description: '',
+          imageUrl: activeShareImage,
+          link: { mobileWebUrl: activeShareUrl, webUrl: activeShareUrl }
+        }
+      });
+      return;
+    }
+    if (navigator.share) {
+      navigator.share({ title: activeShareTitle, text: activeShareTitle, url: activeShareUrl }).catch(function () {});
+      return;
+    }
     copyShareUrl().then(function () {
       showShareToast('링크를 복사했습니다. 카카오톡에서 붙여넣어 주세요.');
     });
@@ -1729,7 +1780,7 @@ var lecCourses = [];
       e.stopPropagation();
       var titleEl = btn.getAttribute('data-share-title-el');
       var title = titleEl ? (document.getElementById(titleEl) || {}).textContent : document.title;
-      shareContent(window.location.href, title, title);
+      shareContent(window.location.href, title, currentArticleImage);
     });
   });
 
