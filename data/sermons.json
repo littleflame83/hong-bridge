@@ -2,32 +2,40 @@
   {
     "id": "why-missing-verses-sermon",
     "title": "성경에 왜 (없음) 구절이 있나요?",
-    "mainCategory": "설교",
-    "subCategory": "기타",
+    "mainCategory": "신약",
+    "subCategory": "신약학 방법론",
     "tags": [
       "성경",
       "구절",
-      "사본"
+      "사본",
+      "본문비평"
     ],
     "summary": "성경에는 왜 (없음)이라고 표시된 절이 있을까요? 사본과 본문비평을 통해 함께 살펴봅니다.",
     "date": "2026-09-26",
     "thumbnail": "",
     "video": "https://youtu.be/gtKV5kQaZP8?si=AhwlUMiol7eE-CJn",
-    "body": ""
+    "body": "",
+    "scripture": "로마서 16:24; 사도행전 15:34 외",
+    "relatedWritingId": "why-missing-verses",
+    "series": ""
   },
   {
     "id": "cloud-or-fire-pillar-sermon",
     "title": "불기둥 구름기둥의 개수",
-    "mainCategory": "설교",
-    "subCategory": "출애굽기 13-14장",
+    "mainCategory": "구약",
+    "subCategory": "모세오경",
     "tags": [
       "모세오경",
-      "광야"
+      "광야",
+      "출애굽기"
     ],
     "summary": "구름기둥과 불기둥은 정말 두 개였을까요? 본문을 따라가며 함께 확인합니다.",
     "date": "2026-09-19",
     "thumbnail": "",
     "video": "https://youtu.be/gIqMWM96y2U?si=hRdqM4VPSI1jTxYc",
-    "body": ""
+    "body": "",
+    "scripture": "출애굽기 13-14장; 40장",
+    "relatedWritingId": "cloud-or-fire-pillar",
+    "series": ""
   }
 ]

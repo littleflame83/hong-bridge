@@ -8,121 +8,141 @@
         "week": 1,
         "id": "ot-week-1",
         "title": "우리말 성경의 역사",
-        "subCategory": "성경일독학교 (구약) 1강",
+        "subCategory": "구약성서 개론",
         "summary": "대한성서공회 내용을 참조하였습니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/hhYBkG1C8u4",
-        "body": ""
+        "body": "",
+        "mainCategory": "구약",
+        "series": "구약 10주"
       },
       {
         "week": 2,
         "id": "ot-week-2",
         "title": "인류의 역사",
-        "subCategory": "성경일독학교 (구약) 2강",
+        "subCategory": "구약성서 개론",
         "summary": "창세기 1~11장까지 내용을 다룹니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/qa67H1TuWSU",
-        "body": ""
+        "body": "",
+        "mainCategory": "구약",
+        "series": "구약 10주"
       },
       {
         "week": 3,
         "id": "ot-week-3",
         "title": "모세오경",
-        "subCategory": "성경일독학교 (구약) 3강",
+        "subCategory": "구약성서 개론",
         "summary": "창세기 12장부터 레위기까지입니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/kaA_56KRSzQ",
-        "body": ""
+        "body": "",
+        "mainCategory": "구약",
+        "series": "구약 10주"
       },
       {
         "week": 4,
         "id": "ot-week-4",
         "title": "역사서",
-        "subCategory": "성경일독학교 (구약) 4강",
+        "subCategory": "이스라엘의 역사",
         "summary": "여호수아부터 열왕기하까지입니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/nszkf3AYR8c",
-        "body": ""
+        "body": "",
+        "mainCategory": "구약",
+        "series": "구약 10주"
       },
       {
         "week": 5,
         "id": "ot-week-5",
         "title": "위대한 바빌론",
-        "subCategory": "성경일독학교 (구약) 5강",
+        "subCategory": "이스라엘의 역사",
         "summary": "바벨론이 얼마나 대단한 나라인지 알수록 그 나라를 장기말처럼 사용하시는 주님의 위대하심을 고백하게 됩니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/VdTE_7viPSc?si=jmmnCoFKOqE3jsee",
-        "body": ""
+        "body": "",
+        "mainCategory": "구약",
+        "series": "구약 10주"
       },
       {
         "week": 6,
         "id": "ot-week-6",
         "title": "창세기",
-        "subCategory": "성경일독학교 (구약) 6강",
+        "subCategory": "구약성서 신학",
         "summary": "바벨론 포로기 이후 관점에서 보면 창세기의 내용이 어마어마해집니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/KdJa4Z83t38",
-        "body": ""
+        "body": "",
+        "mainCategory": "구약",
+        "series": "구약 10주"
       },
       {
         "week": 7,
         "id": "ot-week-7",
         "title": "역대기",
-        "subCategory": "성경일독학교 (구약) 7강",
+        "subCategory": "이스라엘의 역사",
         "summary": "열왕기와 역대기의 차이를 알아야 성경이 더 잘 읽혀집니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/RUiq7wlwhgI",
-        "body": ""
+        "body": "",
+        "mainCategory": "구약",
+        "series": "구약 10주"
       },
       {
         "week": 8,
         "id": "ot-week-8",
         "title": "에스라/느헤미야",
-        "subCategory": "성경일독학교 (구약) 8강",
+        "subCategory": "이스라엘의 역사",
         "summary": "포로기를 끝낸 유다의 이야기를 살펴봅니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/6F11eagrWBw",
-        "body": ""
+        "body": "",
+        "mainCategory": "구약",
+        "series": "구약 10주"
       },
       {
         "week": 9,
         "id": "ot-week-9",
         "title": "욥기",
-        "subCategory": "성경일독학교 (구약) 9강",
+        "subCategory": "구약성서 개론",
         "summary": "욥의 주제는 뭘까요? 오해가 많은 욥의 이야기를 바로 읽어봅시다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/K9rxzBJWTIQ",
-        "body": ""
+        "body": "",
+        "mainCategory": "구약",
+        "series": "구약 10주"
       },
       {
         "week": 10,
         "id": "ot-week-10",
         "title": "인식의 확산",
-        "subCategory": "성경일독학교 (구약) 10강",
+        "subCategory": "구약성서 신학",
         "summary": "구약은 왜 기록되었을까요? 그 의도에 대해 생각해봅니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/ov5gbGZPqWE",
-        "body": ""
+        "body": "",
+        "mainCategory": "구약",
+        "series": "구약 10주"
       }
     ]
   },
@@ -135,121 +155,141 @@
         "week": 1,
         "id": "nt-week-1",
         "title": "신구약중간사",
-        "subCategory": "성경일독학교 (신약) 1강",
+        "subCategory": "신구약중간사",
         "summary": "구약과 신약 사이의 약 300여년의 기간을 다룹니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/2XGJjrRLacg",
-        "body": ""
+        "body": "",
+        "mainCategory": "신약",
+        "series": "신약 10주"
       },
       {
         "week": 2,
         "id": "nt-week-2",
         "title": "예수님의 이 땅에서의 삶",
-        "subCategory": "성경일독학교 (신약) 2강",
+        "subCategory": "신약성서 개론",
         "summary": "예수님은 이 땅에서 어떻게 사셨을까요? 예수님에 대해 알아봅니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/jXL_k5EaNvg",
-        "body": ""
+        "body": "",
+        "mainCategory": "신약",
+        "series": "신약 10주"
       },
       {
         "week": 3,
         "id": "nt-week-3",
         "title": "초대교회의 역사 - 사도행전",
-        "subCategory": "성경일독학교 (신약) 3강",
+        "subCategory": "초기기독교 형성사",
         "summary": "초대교회의 역사 = 신약의 역사이기에 이번 강의에서 살펴봅니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/CNxD8ElM7Yo",
-        "body": ""
+        "body": "",
+        "mainCategory": "신약",
+        "series": "신약 10주"
       },
       {
         "week": 4,
         "id": "nt-week-4",
         "title": "바울의 신학",
-        "subCategory": "성경일독학교 (신약) 4강",
+        "subCategory": "신약성서 신학",
         "summary": "바울이 어떤 생각(신학)을 갖고 있었는지 알면 서신서가 더 잘 이해됩니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/Ni453lSsxLc",
-        "body": ""
+        "body": "",
+        "mainCategory": "신약",
+        "series": "신약 10주"
       },
       {
         "week": 5,
         "id": "nt-week-5",
         "title": "바울서신 - 바울의 복음",
-        "subCategory": "성경일독학교 (신약) 5강",
+        "subCategory": "신약성서 개론",
         "summary": "바울 서신에 대해 알아봅니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/MG9SA6gkOkk",
-        "body": ""
+        "body": "",
+        "mainCategory": "신약",
+        "series": "신약 10주"
       },
       {
         "week": 6,
         "id": "nt-week-6",
         "title": "공관복음",
-        "subCategory": "성경일독학교 (신약) 6강",
+        "subCategory": "신약성서 개론",
         "summary": "왜 우리는 공관복음이라 부를까요? 공관복음 각 권의 주제도 함께 알아봅니다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/Q5i8oipFbck",
-        "body": ""
+        "body": "",
+        "mainCategory": "신약",
+        "series": "신약 10주"
       },
       {
         "week": 7,
         "id": "nt-week-7",
         "title": "요한복음",
-        "subCategory": "성경일독학교 (신약) 7강",
+        "subCategory": "신약성서 개론",
         "summary": "요한복음만의 신학을 살펴보는 시간",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/KGNaGwfLmns",
-        "body": ""
+        "body": "",
+        "mainCategory": "신약",
+        "series": "신약 10주"
       },
       {
         "week": 8,
         "id": "nt-week-8",
         "title": "신약의 주제들 - 기독교 신앙",
-        "subCategory": "성경일독학교 (신약) 8강",
+        "subCategory": "신약성서 신학",
         "summary": "주제들을 통한 기독교 신앙에 대해 알아봅시다",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/WZfUKy8Waxg",
-        "body": ""
+        "body": "",
+        "mainCategory": "신약",
+        "series": "신약 10주"
       },
       {
         "week": 9,
         "id": "nt-week-9",
         "title": "요한계시록",
-        "subCategory": "성경일독학교 (신약) 9강",
+        "subCategory": "신약성서 개론",
         "summary": "요한계시록의 심판은 왜 기록되어 있고 누구를 향한 것인가",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/sOIbqN-Isz4",
-        "body": ""
+        "body": "",
+        "mainCategory": "신약",
+        "series": "신약 10주"
       },
       {
         "week": 10,
         "id": "nt-week-10",
         "title": "인식의 확산2",
-        "subCategory": "성경일독학교 (신약) 10강",
+        "subCategory": "신약성서 신학",
         "summary": "성경은 이것을 위해 기록되었다!!!",
         "tags": [
           "성경일독학교"
         ],
         "video": "https://youtu.be/o5TXxdYyO7A",
-        "body": ""
+        "body": "",
+        "mainCategory": "신약",
+        "series": "신약 10주"
       }
     ]
   }
