@@ -1752,6 +1752,7 @@ var lecCourses = [];
     activeShareUrl = url;
     activeShareTitle = title || '';
     activeShareImage = image || resolveAsset('images/og-default.jpg');
+    if (activeShareImage.charAt(0) === '/') activeShareImage = window.location.origin + activeShareImage;
     document.getElementById('shareSheetSubtitle').textContent = activeShareTitle;
     document.getElementById('shareSheet').classList.remove('hidden');
   }
