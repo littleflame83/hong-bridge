@@ -354,8 +354,8 @@
     .article-prevnext{grid-template-columns:1fr;}
     #a-next{text-align:left;align-items:flex-start;}
   }
-  .section-more-quiet{font-size:13.5px;font-weight:700;color:var(--brown-dark);text-decoration:none;}
-  .section-more-quiet:hover{text-decoration:underline;}
+  .section-more-inline{display:inline-flex;align-items:center;gap:6px;padding:11px 26px;border:1.5px solid var(--brown);border-radius:999px;font-size:13.5px;font-weight:700;color:var(--brown);transition:background-color .15s ease,color .15s ease;}
+  .section-more-inline:hover{background:var(--brown);color:#fff;}
   .article-cta-group{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:40px 0;}
   .cta-block{padding:18px 20px;border-radius:10px;background:var(--cream-deep);display:flex;flex-direction:column;}
   .cta-block .cta-title{margin:0 0 6px;font-weight:700;color:var(--ink);font-size:14.5px;line-height:1.4;}
@@ -598,14 +598,18 @@
             </a>
           </div>
           <div style="text-align:center;margin:28px 0;">
-            <a class="section-more-quiet" href="/writing/">글 전체보기</a>
+            <a class="section-more-inline" href="/writing/">글 전체보기</a>
           </div>
           <div class="article-cta-group">
             <div class="cta-block cta-chat">
+              <p class="cta-title">이 글에 대해 더 이야기하고 싶으신가요?</p>
+              <p class="cta-desc">글에 대한 질문은 여기로 해주세요.</p>
               <a class="cta-btn cta-btn-outline" href="https://open.kakao.com/o/sKmOMV4h" target="_blank" rel="noopener">💬 글에 대해 질문하기</a>
             </div>
             <div class="cta-block cta-apply">
-              <a class="cta-btn cta-btn-solid" href="/apply/">강의/설교 신청하기 →</a>
+              <p class="cta-title">설교나 강의를 요청하고 싶으신가요?</p>
+              <p class="cta-desc">여기를 통해 신청해주시길 바랍니다.</p>
+              <a class="cta-btn cta-btn-solid" href="/apply/">설교·강의 신청하기 →</a>
             </div>
           </div>
         </div>
@@ -1196,7 +1200,7 @@ function toYoutubeEmbed(url) {
         wrap.className = 'always-visible';
         wrap.style.cssText = 'text-align:center;margin:8px 0 28px;';
         var a = document.createElement('a');
-        a.className = 'section-more-quiet';
+        a.className = 'cta-btn cta-btn-solid';
         a.href = buildPath({ page: 'sermons', video: sermonId });
         a.textContent = '이 글과 관련된 설교 보기 →';
         wrap.appendChild(a);
