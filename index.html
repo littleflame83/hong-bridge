@@ -1863,6 +1863,7 @@ var lecCourses = [];
   });
 
   function findRelatedWritingId(item, writingItems) {
+    if (item.relatedWritingId) return item.relatedWritingId;
     if (!item.tags || !item.tags.length) return null;
     var match = writingItems.filter(function (w) {
       return w.tags && w.tags.some(function (t) { return item.tags.indexOf(t) !== -1; });
@@ -1894,7 +1895,7 @@ var lecCourses = [];
             (videoId ? '<span class="week-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5z"></path></svg></span>' : '') +
           '</div>' +
           '<div class="week-body">' +
-            '<span class="week-num">' + escapeHtml(s.subCategory || s.mainCategory || '') + '</span>' +
+            '<span class="week-num">' + escapeHtml(s.scripture || s.subCategory || s.mainCategory || '') + '</span>' +
             '<span class="week-title">' + escapeHtml(s.title || '') + '</span>' +
             (s.summary ? '<span class="week-summary">' + escapeHtml(s.summary) + '</span>' : '') +
           '</div>';
