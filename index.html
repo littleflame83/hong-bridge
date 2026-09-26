@@ -1197,6 +1197,7 @@ function toYoutubeEmbed(url) {
       if (para.indexOf('sermon::') === 0) {
         var sermonId = para.slice(8).trim();
         var wrap = document.createElement('div');
+        wrap.className = 'always-visible';
         wrap.style.cssText = 'text-align:center;margin:8px 0 28px;';
         var a = document.createElement('a');
         a.className = 'cta-btn cta-btn-solid';
@@ -1239,22 +1240,39 @@ function toYoutubeEmbed(url) {
     if (!headings.length) return;
 
     headings.forEach(function (heading) {
-      var sectionNodes = [];
       var sibling = heading.nextElementSibling;
-      while (sibling && headings.indexOf(sibling) === -1) {
-        var toMove = sibling;
-        sibling = sibling.nextElementSibling;
-        sectionNodes.push(toMove);
-      }
-      if (!sectionNodes.length) return;
+      var chunk = [];
+      var insertAfter = heading;
+      var createdBodies = [];
 
-      var body = document.createElement('div');
-      body.className = 'story-section-body';
-      var inner = document.createElement('div');
-      inner.className = 'story-section-inner';
-      sectionNodes.forEach(function (node) { inner.appendChild(node); });
-      body.appendChild(inner);
-      heading.after(body);
+      function flushChunk() {
+        if (!chunk.length) return;
+        var body = document.createElement('div');
+        body.className = 'story-section-body';
+        var inner = document.createElement('div');
+        inner.className = 'story-section-inner';
+        chunk.forEach(function (node) { inner.appendChild(node); });
+        body.appendChild(inner);
+        insertAfter.after(body);
+        insertAfter = body;
+        chunk = [];
+        createdBodies.push(body);
+      }
+
+      while (sibling && headings.indexOf(sibling) === -1) {
+        var next = sibling.nextElementSibling;
+        if (sibling.classList.contains('always-visible')) {
+          flushChunk();
+          insertAfter.after(sibling);
+          insertAfter = sibling;
+        } else {
+          chunk.push(sibling);
+        }
+        sibling = next;
+      }
+      flushChunk();
+
+      if (!createdBodies.length) return;
 
       heading.classList.add('story-section-toggle');
       heading.setAttribute('role', 'button');
@@ -1265,7 +1283,8 @@ function toYoutubeEmbed(url) {
       );
 
       var toggle = function () {
-        var isOpen = body.classList.toggle('is-open');
+        var isOpen = !createdBodies[0].classList.contains('is-open');
+        createdBodies.forEach(function (b) { b.classList.toggle('is-open', isOpen); });
         heading.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       };
       heading.addEventListener('click', toggle);
