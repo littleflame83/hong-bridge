@@ -6,6 +6,13 @@
 <title>HONG-BRIDGE</title>
 <meta name="description" content="성경을 읽고 신학을 공부하며 설교를 생각합니다. 홍성화 목사의 신학 연구·설교 아카이브, HONG-BRIDGE입니다.">
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7N2E8TKDPR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-7N2E8TKDPR');
+</script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -1387,6 +1394,7 @@ function toYoutubeEmbed(url) {
       }
   
       document.title = entry.title + ' | HONG-BRIDGE';
+      trackPageview(window.location.pathname, document.title);
       currentArticleImage = entry.thumbnail ? resolveAsset(entry.thumbnail) : (entry.video ? 'https://img.youtube.com/vi/' + getYoutubeId(entry.video) + '/hqdefault.jpg' : '');
       var metaDesc = document.querySelector('meta[name="description"]');
       if (!metaDesc) {
@@ -1499,6 +1507,7 @@ var lecCourses = [];
     if (sharePath) {
       history.pushState({}, '', sharePath);
     }
+    trackPageview(window.location.pathname, (title || '성경 강의') + ' | HONG-BRIDGE');
   }
 
   function closeLectureVideo(skipUrlChange) {
@@ -1666,6 +1675,16 @@ var lecCourses = [];
     'view-apply': '강의·설교 신청 | HONG-BRIDGE'
   };
 
+  function trackPageview(pagePath, title) {
+    if (typeof gtag === 'function') {
+      gtag('event', 'page_view', {
+        page_path: pagePath,
+        page_title: title || document.title,
+        page_location: window.location.href
+      });
+    }
+  }
+
   function showView(viewId) {
     ['view-home', 'view-lectures', 'view-intro', 'view-apply', 'view-sermons', 'view-writing'].forEach(function (v) {
       document.getElementById(v).style.display = (v === viewId) ? '' : 'none';
@@ -1675,6 +1694,7 @@ var lecCourses = [];
       observeReveals(document.getElementById(viewId));
     });
     translateIfNeeded(document.getElementById(viewId));
+    trackPageview(window.location.pathname, PAGE_TITLES[viewId]);
   }
 
   // ===== 글 모달 (article modal) =====
