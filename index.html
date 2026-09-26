@@ -426,7 +426,7 @@
   .week-grid > .week-card:last-child:nth-child(3n+1){grid-column:auto;}
   .lecture-video-modal{position:fixed;inset:0;background:rgba(0,0,0,.68);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:28px;}
   .lecture-video-modal.hidden{display:none;}
-  .lecture-video-box{width:min(720px,90vw);max-height:88vh;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.35);position:relative;display:flex;flex-direction:column;}
+  .lecture-video-box{width:min(720px,90vw);max-height:94vh;overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 70px rgba(0,0,0,.35);position:relative;display:flex;flex-direction:column;}
   .lecture-video-head{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--line);gap:14px;}
   .lecture-video-title{font-size:15px;font-weight:750;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .lecture-video-close{width:34px;height:34px;border:0;border-radius:50%;background:var(--cream-deep);color:var(--ink);font-size:22px;line-height:1;cursor:pointer;flex:0 0 auto;}
@@ -1533,8 +1533,15 @@ var lecCourses = [];
   });
 
 
+  var lecWritingItems = [];
+
   function initLectures(courseParam, autoOpenVideoId) {
-  fetch(BASE_PATH + 'data/lectures.json').then(function (r) { return r.json(); }).then(function (data) {
+  Promise.all([
+    fetch(BASE_PATH + 'data/lectures.json').then(function (r) { return r.json(); }),
+    fetch(BASE_PATH + 'data/writing.json').then(function (r) { return r.json(); }).catch(function () { return []; })
+  ]).then(function (results) {
+    var data = results[0];
+    lecWritingItems = results[1];
     lecCourses = data;
     if (courseParam === 'ot') lecActiveCourseId = 'ot-10weeks';
     else if (courseParam === 'nt') lecActiveCourseId = 'nt-10weeks';
@@ -1547,7 +1554,7 @@ var lecCourses = [];
       var course = lecCourses.filter(function (c) { return c.id === lecActiveCourseId; })[0];
       var target = course && (course.weeks || []).filter(function (w) { return w.id === autoOpenVideoId; })[0];
       if (target && target.video) {
-        openLectureVideo(target.video, (target.week + '강 · ' + target.title));
+        openLectureVideo(target.video, (target.week + '강 · ' + target.title), findRelatedWritingId(target, lecWritingItems));
       }
     }
   });
@@ -1597,7 +1604,7 @@ var lecCourses = [];
       card.addEventListener('click', function () {
         if (w.video) {
           var courseCode = lecActiveCourseId.indexOf('ot') === 0 ? 'ot' : 'nt';
-          openLectureVideo(w.video, (w.week + '강 · ' + w.title), null, buildPath({ page: 'lectures', course: courseCode, video: w.id }));
+          openLectureVideo(w.video, (w.week + '강 · ' + w.title), findRelatedWritingId(w, lecWritingItems), buildPath({ page: 'lectures', course: courseCode, video: w.id }));
         }
       });
       listEl.appendChild(card);
@@ -2057,7 +2064,8 @@ var lecCourses = [];
             var shareQ = r.type === 'lecture'
               ? buildPath({ page: 'lectures', course: r.course, video: r.id })
               : buildPath({ page: 'sermons', video: r.id });
-            openLectureVideo(r.video, r.title, null, shareQ);
+            var writingOnly = items.filter(function (it) { return it.type === 'writing'; });
+            openLectureVideo(r.video, r.title, findRelatedWritingId(r, writingOnly), shareQ);
           } else {
             openArticleModal(r.id);
           }
